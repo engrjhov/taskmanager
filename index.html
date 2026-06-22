@@ -8,7 +8,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Public+Sans:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ── DESIGN TOKENS ── Dark mode variables ────────────────── */
+/* ============================================================
+   DESIGN TOKENS — Dark Mode
+   ============================================================ */
 :root {
   /* ── FONTS ── */
   --font:      'Public Sans', sans-serif;
@@ -46,6 +48,9 @@
   --shadow-sm: 0 4px 16px rgba(0,0,0,0.3);
   --glow-card: 0 0 0 1px rgba(79,154,181,0.2), 0 8px 24px rgba(40,92,112,0.15);
 }
+/* ============================================================
+   DESIGN TOKENS — Light Mode
+   ============================================================ */
 [data-theme="light"] {
   /* ── WARM PAPER+ — Light Mode ── */
   --green:     #16A34A;
@@ -71,7 +76,9 @@
   --glow-card: 0 0 0 1px rgba(13,148,136,0.15), 0 4px 16px rgba(13,148,136,0.08);
 }
 
-/* ── RESET + BASE ────────────────────────────────────────── */
+/* ============================================================
+   RESET & BASE STYLES
+   ============================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
@@ -107,7 +114,7 @@ button { font-family: var(--font); cursor: pointer; }
 input, select, textarea { font-family: var(--font); }
 /* Display font for headings and titles */
 h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
-.section-sub,.nav-name,.today-strip-daynum,.kpi-num,.kpi-label,
+.section-sub,.nav-name,.today-strip-daynum,
 .task-title,.modal-title,.detail-title { font-family: var(--font-disp); }
 
 /* ============================================================
@@ -177,6 +184,7 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
   --sidebar-w: 240px;
   --sidebar-collapsed-w: 64px;
 }
+/* ── Sidebar width tokens above; full sidebar + layout rules below ── */
 
 .app-container {
   display: flex;
@@ -454,6 +462,7 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 }
 
 
+/* ── Status Indicators, Sync, Navigation Utilities ── */
 /* Offline state for the status dot */
 .nav-dot.offline {
   background: var(--muted);
@@ -487,6 +496,11 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
   .sidebar-collapse-row-btn { display: none; }
   .main-content, .main-content.collapsed { margin-left: 0; padding: 0; width: 100%; }
   .mobile-header { display: flex; }
+  /* CRIT-001 (revised): offset every active page below the fixed 62px mobile header.
+     Targeting .page.active (position:relative, in flex flow) rather than .main-content
+     so that flex:1 pages (Overview, Planner) and height:100vh pages (Board, People,
+     Resources, Reminders) all shift their top content down correctly. */
+  .page.active { padding-top: var(--nav-h); }
 }
 
 /* Restored Status & Toggle Styles */
@@ -500,7 +514,7 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 .icon-toggle:hover { background: var(--glassh); color: var(--text); }
 
 /* ============================================================
-   SECTION LAYOUT
+   NAVIGATION & PAGE SECTION LAYOUT
    ============================================================ */
 .section { padding: 36px 28px 48px; min-height: unset; }
 .section-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 4px; display: flex; align-items: center; gap: 10px; line-height: 1.3; }
@@ -522,7 +536,9 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 .caption-text { font-size: 12px; color: var(--muted); }
 /* Chip label stays small for UI density */
 
-/* ── TODAY OVERVIEW ─────────────────────────────────────── */
+/* ============================================================
+   TODAY / OVERVIEW TAB
+   ============================================================ */
 
 /* Side-by-side layout: date card | schedule | pinned notes */
 .today-layout {
@@ -656,32 +672,9 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 
 .today-empty { text-align: center; padding: 28px 20px; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 4px; }
 
-/* ── KPI CARDS ────────────────────────────────────────────── */
-.kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(152px, 1fr));
-  gap: 12px; margin-bottom: 32px;
-}
-.kpi-card {
-  background: var(--glass);
-  backdrop-filter: var(--blur-sm);
-  -webkit-backdrop-filter: var(--blur-sm);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  display: flex; flex-direction: column; gap: 6px;
-  position: relative; overflow: hidden;
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-}
-.kpi-card:hover { transform: translateY(-3px); box-shadow: var(--glow-card); }
-.kpi-accent { position: absolute; top: 0; left: 0; width: 100%; height: 2px; border-radius: var(--radius) var(--radius) 0 0; }
-.kpi-glow { position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; border-radius: 50%; opacity: 0.08; filter: blur(20px); }
-.kpi-icon  { font-size: 20px; line-height: 1; position: relative; }
-.kpi-label { font-size: 12px; color: var(--text2); font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; position: relative; }
-.kpi-value { font-size: 32px; font-weight: 800; letter-spacing: -1px; line-height: 1; position: relative; }
-.kpi-sub   { font-size: 12px; color: var(--muted); position: relative; }
-
-/* ── PERSON CARDS ─────────────────────────────────────────── */
+/* ============================================================
+   PEOPLE TAB & PERSON DETAIL MODAL
+   ============================================================ */
 .person-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(285px, 1fr)); gap: 16px; }
 .person-card {
   background: var(--glass);
@@ -787,9 +780,9 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 .pdm-group-divider { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); padding: 8px 4px 4px; display: flex; align-items: center; gap: 8px; }
 .pdm-group-divider::after { content:''; flex:1; height:1px; background: var(--border); }
 
-/* ════════════════════════════════════════════════════════════
-   G.TAKE TODAY REDESIGN — task list + right panel + pill KPIs
-   ════════════════════════════════════════════════════════════ */
+/* ============================================================
+   TODAY REDESIGN LAYOUT — G.TAKE (pill strip, right panel, mini-calendar)
+   ============================================================ */
 .gt-layout {
   display: flex;
   flex-direction: row;
@@ -814,6 +807,11 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
+  /* P1-BUG002 (R001c): overflow:hidden is correct and required here.
+     The column is a flex child of .gt-layout (itself overflow:hidden, 100vh-bounded),
+     so it already has a bounded height — it cannot grow taller than the viewport.
+     The calendar must stay inside this bounded box, not overflow it.
+     The fix is in how notes and calendar share the available height (see below). */
   overflow: hidden;
   gap: 12px;
   padding: 0 24px 40px 16px;
@@ -821,11 +819,19 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
      sits fully above the FAB zone — FAB only overlaps the border below */
   border-left: 1px solid var(--border);
 }
-/* Notes section — scrolls independently */
+/* Notes section — fills remaining space above calendar; notes scroll internally */
 .gt-notes-section {
-  flex: none;                      /* natural height — grows with content */
-  max-height: calc(100% - 320px); /* cap: always leaves room for calendar below */
-  min-height: 80px;                /* minimum even when empty */
+  /* P1-BUG002 (R001c): was flex:none (natural height, max-height capped).
+     flex:none let the notes section grow with content until the max-height cap,
+     but max-height:calc(100% - 320px) requires the parent to have an explicit
+     height for % to resolve — it did not, so the cap was ineffective with many
+     notes, pushing the calendar out of the bounded column.
+     Fix: flex:1 + min-height:0 makes notes fill all available space in the column
+     after the calendar takes its flex-shrink:0 min-height:300px. Notes then
+     scroll internally via .gt-notes-list (overflow-y:auto, already in place).
+     The calendar is always anchored at the bottom within the bounded column. */
+  flex: 1;
+  min-height: 80px;               /* minimum even when empty; flex:1 fills the rest */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -850,6 +856,12 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
   flex-shrink: 0;
   /* min-height guarantees calendar is always fully visible even on short screens */
   min-height: 300px;
+  /* P1-BUG002: overflow:visible allows click events on calendar cells that fall
+     near the bottom of .gt-right-col (which has overflow:hidden) to register
+     correctly. Without this, bottom calendar rows are visually present but
+     outside the parent hit-test zone. Pinned notes clipping is unaffected
+     because notes live in .gt-notes-section, a sibling of .gt-cal-section. */
+  overflow: visible;
 }
 
 @media (max-width: 1099px) {
@@ -878,11 +890,21 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 }
 .tag-btn:hover { opacity: 0.75; transform: translateY(-1px); filter: brightness(1.2); }
 
-/* ── Floating Action Button (FAB) ── */
+/* ============================================================
+   FLOATING ACTION BUTTON (FAB)
+   ============================================================ */
 .fab-wrap {
   position: fixed; bottom: 28px; right: 28px;
   z-index: 8000; display: flex; flex-direction: column;
   align-items: flex-end; gap: 10px;
+  /* P1-BUG002 (R001d): .fab-wrap has no explicit width and its layout box extends
+     leftward far enough to overlap the right columns of the mini-calendar
+     (Thu/Fri/Sat area). With pointer-events defaulting to auto, the transparent
+     wrapper was intercepting clicks intended for calendar cells beneath it.
+     Fix: pointer-events:none on the wrap passes all clicks through to elements
+     below. The interactive children (.fab-main button and .fab-options.open)
+     restore pointer-events:auto for themselves and remain fully clickable. */
+  pointer-events: none;
 }
 .fab-wrap.hidden { display: none; }
 .fab-main {
@@ -895,6 +917,7 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
   display: flex; align-items: center; justify-content: center;
   transition: all 0.2s; font-family: var(--font);
   line-height: 1;
+  pointer-events: auto; /* restored: parent .fab-wrap has pointer-events:none */
 }
 .fab-main:hover { background: rgba(40,92,112,1); transform: scale(1.08); }
 .fab-main.open { transform: rotate(45deg); background: rgba(40,92,112,1); }
@@ -919,7 +942,7 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 .fab-option-icon { font-size: 16px; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); flex-shrink: 0; }
 .fab-option-label { font-size: 12px; font-weight: 600; color: var(--text); }
 
-/* ── Tag list modal ── */
+/* ── Tag List Modal ── */
 .tag-list-item {
   display: flex; align-items: center; gap: 10px;
   padding: 10px 12px; border-radius: 10px; cursor: pointer;
@@ -932,7 +955,9 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 .tag-list-title { font-size: 13px; font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .tag-list-meta  { font-size: 10px; color: var(--text2); margin-top: 2px; font-family: var(--mono); }
 
-/* ── Subtasks ── */
+/* ============================================================
+   SUBTASKS
+   ============================================================ */
 .subtask-section { margin-top: 16px; }
 .subtask-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -1021,12 +1046,8 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 .gt-card:hover { border-color: var(--border2); background: var(--glassh); transform: translateY(-1px); box-shadow: var(--glow-card); }
 .gt-card-row1 { display: flex; align-items: center; gap: 5px; margin-bottom: 5px; }
 .gt-card-row1-right { margin-left: auto; flex-shrink: 0; }
-.gt-card-row2 { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
-.gt-card-id-sm { font-size: 8px; font-family: var(--mono); color: var(--muted); }
 .gt-card-title { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); margin-bottom: 2px; }
-.gt-card-row4 { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; min-height: 0; }
 .gt-card-desc-sm { font-size: 11px; color: var(--text2); line-height: 1.4; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; flex: 1; min-width: 0; }
-.gt-card-tags-right { display: flex; gap: 3px; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; max-width: 45%; }
 .gt-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
 .gt-card-footer-left { display: flex; align-items: center; gap: 5px; min-width: 0; }
 .gt-card-footer-right { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
@@ -1106,7 +1127,7 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 .gt-pin-note:last-child { margin-bottom: 0; }
 .gt-pin-unpin { position: absolute; top: 6px; right: 7px; width: 16px; height: 16px; border-radius: 4px; background: rgba(0,0,0,0.15); border: none; cursor: pointer; font-size: 9px; color: inherit; opacity: 0.55; display: flex; align-items: center; justify-content: center; }
 
-/* Mini calendar */
+/* ── Mini-Calendar (right panel) ── */
 .gt-mini-cal { }
 .gt-mc-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; margin-top: 6px; }
 .gt-mc-dlbl { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--muted); text-align: center; padding-bottom: 3px; }
@@ -1123,10 +1144,6 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 .gt-mc-legend { display: flex; gap: 12px; margin-top: 6px; font-size: 9px; color: var(--muted); }
 .gt-mc-legend span { display: flex; align-items: center; gap: 4px; }
 .gt-mc-legend i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
-
-/* ============================================================
-   WEEKLY PLANNER — responsive
-   ============================================================ */
 
 /* ============================================================
    STICKY NOTES — draggable, floating
@@ -1287,19 +1304,22 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
    ============================================================ */
 .kanban-wrap {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  overflow-x: auto; overflow-y: auto;
+  grid-template-columns: repeat(5, minmax(260px, 1fr));
   gap: 14px;
   align-items: stretch;
   flex: 1; min-height: 0;
-  overflow: hidden;
   padding-bottom: 24px;
   box-sizing: border-box;
+  scroll-snap-type: x mandatory;
+    padding-bottom: 16px;
 }
 .kanban-col {
-  background: var(--glass); backdrop-filter: var(--blur-sm); -webkit-backdrop-filter: var(--blur-sm);
+  background: var(--glass); backdrop-filter: var(--blur-sm); -webkit-backdrop-filter: var(--blur-sm);   overflow-x: auto; overflow-y: auto;
   border: 1px solid var(--border); border-radius: var(--radius);
   display: flex; flex-direction: column;
-  min-height: 0;
+  min-height: 0; min-width: 260px; scroll-snap-align: start;
+
 }
 .kanban-col-header {
   padding: 13px 15px; border-bottom: 1px solid var(--border);
@@ -1323,9 +1343,10 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
   overflow-y: auto; scrollbar-gutter: stable;
 }
 
-.kanban-body.scrollable {
-  overflow-y: auto;
-}
+  /* smoother scrolling */
+  .kanban-wrap::-webkit-scrollbar {
+    height: 6px;
+  }
 .task-card { background: var(--glass2); backdrop-filter: var(--blur-sm); -webkit-backdrop-filter: var(--blur-sm); border: 1px solid var(--border); border-radius: 12px; padding: 13px; cursor: pointer; transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s; position: relative; overflow: hidden; flex-shrink: 0; min-height: 80px; }
 .task-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; border-radius: 12px 0 0 12px; }
 .task-card:hover { transform: translateY(-2px); border-color: var(--border2); box-shadow: var(--glow-card); }
@@ -1357,6 +1378,9 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 .av-count   { font-size: 9px; color: var(--muted); font-weight: 600; margin-left: 4px; }
 [data-theme="light"] .av-contrib { border-color: var(--bg); }
 [data-theme="light"] .av-more    { border-color: var(--bg); background: rgba(0,0,0,0.08); color: var(--text2); }
+/* ============================================================
+   CHIPS, BADGES & DUE INDICATORS
+   ============================================================ */
 .due-chip { font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 20px; font-family: var(--mono); }
 /* Group 1 — Context chips (label the date relationship) */
 .ctx-chip { font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 20px; white-space: nowrap; letter-spacing: 0.02em; }
@@ -1367,6 +1391,13 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 .due-warn { background: rgba(251,191,36,0.12);  color: var(--yellow); }
 .due-over { background: rgba(248,113,113,0.12); color: var(--red); }
 .due-today{ background: rgba(40,92,112,0.18);  color: var(--accent2); }
+/* P5-BUG001: Light-theme overrides for legacy due-chip classes.
+   Dark-mode default backgrounds are too faint on the warm cream light-mode
+   card surface. Values match CHIP_COLORS lightBg/lightText entries exactly. */
+[data-theme="light"] .due-ok    { background: rgba(22,163,74,0.1);   color: #166534; }
+[data-theme="light"] .due-warn  { background: rgba(180,83,9,0.1);    color: #B45309; }
+[data-theme="light"] .due-over  { background: rgba(220,38,38,0.1);   color: #B91C1C; }
+[data-theme="light"] .due-today { background: rgba(14,116,144,0.12); color: #0E7490; }
 .kanban-add-btn { width: calc(100% - 20px); margin: auto 10px 10px; height: 32px; border: 1px dashed var(--border2); flex-shrink: 0; background: transparent; border-radius: 9px; color: var(--muted); font-size: 12px; font-family: var(--font); cursor: pointer; transition: all 0.15s; }
 .kanban-add-btn:hover { border-color: var(--accent); color: var(--accent); }
 .kanban-filter-bar {
@@ -1379,9 +1410,11 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 }
 /* Kanban context pill strip */
 .kb-pill-strip {
-  display: flex; align-items: center; flex-wrap: wrap;
+  display: flex; align-items: center; flex-wrap: nowrap; /* P5-MOB-R001c: was wrap — caused multi-line rows on mobile */
+  overflow-x: auto; scrollbar-width: none;               /* horizontal scroll instead of wrapping */
   gap: 6px; margin-bottom: 10px; flex-shrink: 0;
 }
+.kb-pill-strip::-webkit-scrollbar { display: none; }    /* hide scrollbar visually on WebKit */
 .kb-pill {
   display: flex; align-items: center; gap: 6px;
   padding: 6px 14px; border-radius: 20px; cursor: pointer;
@@ -1468,7 +1501,9 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 .kanban-filter-bar input::placeholder { color: var(--muted); }
 .filter-count { font-size: 11px; color: var(--muted); margin-left: auto; }
 
-/* ── DIRECTORIES ──────────────────────────────────────────── */
+/* ============================================================
+   DIRECTORIES / RESOURCES TAB
+   ============================================================ */
 .dir-tabs { display: flex; gap: 6px; margin-bottom: 20px; }
 .dir-tab { padding: 7px 16px; border-radius: 10px; background: var(--glass); border: 1px solid var(--border2); color: var(--text2); font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 6px; backdrop-filter: var(--blur-sm); }
 .dir-tab.active { background: rgba(40,92,112,0.2); color: var(--accent2); border-color: var(--bordera); }
@@ -1541,7 +1576,9 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 }
 .toggle-switch.on .toggle-knob { left: 18px; }
 
-/* ── REMINDERS TAB ────────────────────────────────────────── */
+/* ============================================================
+   REMINDERS TAB
+   ============================================================ */
 .reminders-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -1646,7 +1683,7 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 }
 
 /* ============================================================
-   PLANNER VIEW TOGGLE
+   MODALS & FORMS
    ============================================================ */
 
 /* TEE detail view */
@@ -1818,14 +1855,6 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 /* Wide modal for archive drawer */
 .modal-wide { max-width: min(860px, 95vw); }
 
-/* Compact KPI grid in Kanban (slightly smaller cards) */
-.kpi-grid-compact .kpi-card {
-  padding: 14px 16px;
-}
-.kpi-grid-compact .kpi-value { font-size: 26px; }
-.kpi-grid-compact .kpi-icon  { font-size: 18px; }
-.kpi-grid-compact .kpi-label { font-size: 10px; }
-.kpi-grid-compact .kpi-sub   { font-size: 10px; }
 /* Active today badge on person cards */
 .person-card-active { border-color: rgba(52,211,153,0.25); }
 .person-active-dot {
@@ -1982,7 +2011,9 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
   display: flex; flex-direction: column;
   flex: 1; min-height: 0; overflow: hidden;
 }
-/* ── RESPONSIVE BREAKPOINTS ───────────────────────────────── */
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================ */
 
 /* ── Large desktop (1400px+) ── */
 @media (min-width: 1400px) {
@@ -1997,7 +2028,6 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 @media (max-width: 1023px) {
   /* Weekly: 4 cols Mon-Thu, then Fri-Sun wrap to second row */
   
-  .kpi-grid  { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
   .cal-label { font-size: 8px; padding: 1px 4px; }
 }
 
@@ -2034,7 +2064,6 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
   .mobile-header { display: flex; }
   .form-row { grid-template-columns: 1fr; }
   .section  { padding: 20px 14px; }
-  .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   /* Kanban: 2 columns on tablet — revert to page scroll */
   #page-board.active { overflow-y: auto; flex: none; height: auto; min-height: 100vh; }
   .kanban-board-wrap { flex: none; overflow: visible; }
@@ -2053,7 +2082,6 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
   .cal-cell { padding: 3px; }
   .cal-day-label { font-size: 8px; letter-spacing: 0; }
   .cal-title { font-size: 14px; }
-  .kpi-grid  { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   /* Kanban: 2 columns still — page scroll */
   .kanban-wrap { grid-template-columns: repeat(2, 1fr); gap: 8px; overflow: visible; }
   .section { padding: 16px 12px; }
@@ -2076,8 +2104,6 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
   .cal-date  { font-size: 10px; }
   .modal { max-width: 100%; border-radius: 16px 16px 0 0; margin: auto 0 0; max-height: 92vh; }
   .modal-backdrop { align-items: flex-end; padding: 0; }
-  .kpi-grid  { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .kpi-value { font-size: 24px; }
   .person-grid { grid-template-columns: 1fr; }
   .section { padding: 14px 10px; }
   .section-title { font-size: 22px; }
@@ -2085,8 +2111,9 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
   
 }
 
-[data-theme="light"] .kpi-card { box-shadow: 10px 10px 26px rgba(130,100,60,0.2), -5px -5px 14px rgba(255,255,255,1); background:#FFFFFF; border-color:rgba(215,200,180,0.5); }
-/* ── 3-Group Filter System ─────────────────────────────── */
+/* ============================================================
+   OVERVIEW FILTER PILLS & CARD ANIMATIONS
+   ============================================================ */
 
 /* Primary group pills — larger, more prominent */
 .gt-primary-pill {
@@ -2112,7 +2139,7 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 /* Sub-filter pill row — slides down under primary strip */
 .gt-subpill-strip {
   display: flex; align-items: center; gap: 5px;
-  flex-wrap: nowrap; overflow-x: visible; scrollbar-width: none;
+  flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; /* MED-003: was overflow-x:visible — risked horizontal page overflow on narrow screens */
   padding: 0; flex-shrink: 0;
   margin-bottom: 10px;
 }
@@ -2218,9 +2245,33 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
   overflow-y: auto;
   box-sizing: border-box;  scrollbar-gutter: stable;
 }
+/* LOW-001: reduce generous 24px padding on phones — placed AFTER base rule so cascade wins */
+@media (max-width: 479px) {
+  #page-people.active,
+  #page-directories.active,
+  #page-reminders.active { padding: 16px; }
+}
+/* P5-MOB-R001c CRIT-001: offset full-height pages below the fixed 62px mobile header.
+   .page.active { padding-top: var(--nav-h) } (in the 900px block above) is overridden by
+   the higher-specificity (1,1,0) ID rules above. These rules have the same specificity
+   but come later in the stylesheet, so they win via cascade order.
+   Board's existing top padding is 0 (padding: 24px 24px 0), so +24px makes it symmetrical.
+   People/Dir/Reminders existing top padding is 24px, so calc adds the header height on top.
+   On ≤479px: LOW-001 sets padding:16px (all sides); this rule then overrides only padding-top,
+   leaving the reduced 16px side+bottom padding from LOW-001 intact. */
+@media (max-width: 900px) {
+  #page-board.active {
+    padding-top: calc(var(--nav-h) + 24px);
+  }
+  #page-people.active,
+  #page-directories.active,
+  #page-reminders.active {
+    padding-top: calc(var(--nav-h) + 24px);
+  }
+}
 
 
-/* ── Light mode accent overrides for interactive states ── */
+/* ── Light Mode: Interactive State Overrides ── */
 [data-theme="light"] .pdm-tab.active { background: rgba(13,148,136,0.12); color: var(--accent2); border-color: rgba(13,148,136,0.25); }
 [data-theme="light"] .gt-fchip.active { background: rgba(13,148,136,0.12); color: var(--accent2); border-color: rgba(13,148,136,0.25); }
 [data-theme="light"] .dir-tab.active { background: rgba(13,148,136,0.12); color: var(--accent2); border-color: rgba(13,148,136,0.25); }
@@ -2228,7 +2279,9 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 [data-theme="light"] .toast.info { border-color: rgba(13,148,136,0.4); }
 
 
-/* ── Planner Tab — Day / Week / Month rebuild ──────────────────────── */
+/* ============================================================
+   PLANNER TAB — Day / Week / Month Views
+   ============================================================ */
 
 /* Hero */
 .planner-hero { margin-bottom: 14px; flex-shrink: 0; padding: 24px 24px 0; }
@@ -2518,7 +2571,7 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 }
 .planner-time-grid { display: flex; flex-direction: column; flex-shrink: 0; width: 100%; }
 .planner-time-row {
-  display: flex; height: 48px;
+  display: flex; min-height: 48px; /* P1-BUG003: was height:48px — fixed height caused same-time items to overlap */
   border-bottom: 0.5px solid var(--border);
   flex-shrink: 0;
 }
@@ -2715,7 +2768,7 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
    1. CONFIG — Edit these to connect to Google Sheets
    ============================================================ */
 const CONFIG = {
-  SHEET_URL:    'https://script.google.com/macros/s/AKfycbwrg7TLwrD8sB1XRv7Zk7dzu-g1mKfpwTbKYcsoP1RXkkzvZPcOHaHIaNakarWKGj3Qwg/exec',
+  SHEET_URL:    'https://script.google.com/macros/s/AKfycbzqa38hNdjrd9eXMIDSV-B1WJ5-to-spleOf5sZRNCCfECSv9A_j9gKKi1p-ymGegnz/exec',
   SYNC_MS:      30000,
   ARCHIVE_DAYS: 60,   // items older than this are auto-archived once per day
 
@@ -2844,8 +2897,11 @@ const PINNED_COLORS = {
   dark:  { border: '#4F9AB5', shadow: '0 4px 20px rgba(79,154,181,0.25)', bg: 'rgba(79,154,181,0.06)' },
   light: { border: '#0E7490', shadow: '0 4px 20px rgba(14,116,144,0.20)', bg: 'rgba(14,116,144,0.05)' },
 };
+function isDarkTheme() {
+  return document.documentElement.getAttribute('data-theme') !== 'light';
+}
 function getPinnedAccent() {
-  return document.documentElement.getAttribute('data-theme') !== 'light'
+  return isDarkTheme()
     ? PINNED_COLORS.dark : PINNED_COLORS.light;
 }
 
@@ -2861,12 +2917,12 @@ const NOTE_ACTION_COLORS = {
   },
 };
 function getNoteActionColor(key) {
-  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  const isDark = isDarkTheme();
   const c = NOTE_ACTION_COLORS[key];
   return isDark ? c.dark : c.light;
 }
 function getChipColor(key) {
-  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  const isDark = isDarkTheme();
   const c = CHIP_COLORS[key];
   if (!c) return { bg:'transparent', text:'var(--text2)', border:'var(--border)' };
   return isDark
@@ -2937,49 +2993,26 @@ const MONTHS = ['January','February','March','April','May','June','July','August
 
 function getPri(priority) {
   const p = PRIORITY[priority] || PRIORITY.Low;
-  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  const isLight = !isDarkTheme();
   if (!isLight) return p;
   return { ...p, bg:p.lightBg, text:p.lightText, bar:p.lightBar };
-}
-function getEntry(priority) {
-  const e = ENTRY_COLORS[priority] || ENTRY_COLORS.Low;
-  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-  if (!isLight) return e;
-  return { ...e, bg:e.lightBg, border:e.lightBorder, text:e.lightText };
 }
 function getStickyColor(colorIdx) {
   const idx = Math.max(0, parseInt(colorIdx) || 0) % STICKY_COLORS.length;
   const c = STICKY_COLORS[idx] || STICKY_COLORS[0];
-  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  const isDark = isDarkTheme();
   return isDark ? { bg: c.darkBg, text: c.darkText } : { bg: c.bg, text: c.text };
 }
 function getStatusColor(status) {
-  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  const isDark = isDarkTheme();
   const s = STATUS_COLORS[status];
   if (!s) return isDark ? '#64748B' : '#475569';
   return isDark ? s.dark : s.light;
 }
 function getColColor(col) {
-  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  const isDark = isDarkTheme();
   return isDark ? col.dark : col.light;
 }
-function tagColor(tagName) {
-  if (!tagName) return { bg:'rgba(40,92,112,0.2)', text:'#4F9AB5', border:'rgba(79,154,181,0.35)' };
-  const key = tagName.trim().toLowerCase();
-  if (TAG_CUSTOM[key]) {
-    const c = TAG_CUSTOM[key];
-    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-    return { bg: c + (isDark?'22':'18'), text: c, border: c + '55' };
-  }
-  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-  const palette = isDark ? TAG_PALETTE_DARK : TAG_PALETTE_LIGHT;
-  let h = 0;
-  for (let i = 0; i < tagName.length; i++) h = (h * 31 + tagName.charCodeAt(i)) & 0x7fffffff;
-  const c = palette[h % palette.length];
-  return { bg: c + (isDark?'22':'18'), text: c, border: c + '55' };
-}
-
-
 /* ============================================================
    3. STATE
    ============================================================ */
@@ -3127,35 +3160,11 @@ function toast(msg, type='success') {
   setTimeout(()=>el.remove(), 3000);
 }
 
-function kpis() {
-  const tasks    = getTasks();
-  const todayStr = fmtDate(TODAY);
-
-  // Full week: Monday–Sunday of the current week
-  const weekStart = new Date(TODAY);
-  weekStart.setDate(TODAY.getDate() - ((TODAY.getDay()+6)%7)); // Monday
-  const weekEnd   = new Date(weekStart);
-  weekEnd.setDate(weekStart.getDate() + 6); // Sunday
-  const weekStartStr = fmtDate(weekStart);
-  const weekEndStr   = fmtDate(weekEnd);
-
-  const total       = tasks.length;
-  const done        = tasks.filter(x=>parseStatus(x.status).state==='Completed').length;
-  const inProgress  = tasks.filter(x=>{ const s=parseStatus(x.status).state; return s==='In Progress'||s==='Review'; }).length;
-  const pending     = tasks.filter(x=>{ const s=parseStatus(x.status).state; return s==='Backlog'||s==='To Do'; }).length;
-  const overdue     = tasks.filter(x=>x.dueDate && daysUntil(x.dueDate)<0 && parseStatus(x.status).state!=='Completed').length;
-  const dueToday    = tasks.filter(x=>x.dueDate===todayStr && parseStatus(x.status).state!=='Completed').length;
-  const dueThisWeek = tasks.filter(x=>x.dueDate>=weekStartStr && x.dueDate<=weekEndStr && parseStatus(x.status).state!=='Completed').length;
-  const highPri     = tasks.filter(x=>(x.priority==='High'||x.priority==='Critical') && parseStatus(x.status).state!=='Completed').length;
-  const rate        = total ? Math.round(done/total*100) : 0;
-  return { total, done, inProgress, pending, overdue, dueToday, dueThisWeek, highPri, rate };
-}
-
-const personTasks = name => getTasks().filter(t => { const parts = (t.assignees||'').split('|').map(s=>s.trim()).filter(Boolean); return parts.includes(name); });
+const personTasks = name => getTasks().filter(t => { const parts = splitAssigneeNames(t.assignees); return parts.includes(name); });
 
 // All items (tasks + events + entries) where person is lead or participant
 const personItems = name => STATE.items.filter(item => {
-  const parts = (item.assignees||'').split('|').map(s=>s.trim()).filter(Boolean);
+  const parts = splitAssigneeNames(item.assignees);
   return parts.includes(name);
 });
 
@@ -3208,7 +3217,7 @@ function openPersonDetailModal(personId, activeTab) {
           <div style="font-size:12px;color:var(--text2)">${p.role||'—'}</div>
         </div>
       </div>
-      <button class="modal-close" onclick="clearNav()">✕</button>
+      ${_modalCloseBtn()}
     </div>
     ${pillsHTML}
     <div class="pdm-tabs">${tabsHTML}</div>
@@ -3509,6 +3518,10 @@ async function deleteArchiveItem(id) {
   await sheetDelete(CONFIG.SHEETS.archive, id);
 }
 
+// Parse pipe-delimited "Tags" cell from a sheet row into a clean array
+function parseTagList(raw) {
+  return (raw||'').split('|').map(t=>t.trim().replace(/^#/,'')).filter(Boolean);
+}
 // ── STICKIES (notes) ────────────────────────────────────────
 async function fetchStickies() {
   const rows = await sheetGetAll(CONFIG.SHEETS.stickies);
@@ -3520,7 +3533,7 @@ async function fetchStickies() {
     y:        Number(r['Y'])||120,
     float:    r['Float']  === true || r['Float']  === 'TRUE' || r['Float']  === '1',
     pinned:   r['Pinned'] === true || r['Pinned'] === 'TRUE' || r['Pinned'] === '1',
-    tags:     (r['Tags']||'').split('|').map(t=>t.trim().replace(/^#/,'')).filter(Boolean),
+    tags:     parseTagList(r['Tags']),
     date:     r['Date']||'',
     time:     r['Time']||'',
     done:     r['Done'] === true || r['Done'] === 'TRUE' || r['Done'] === '1',
@@ -3572,7 +3585,7 @@ async function deleteSticky(id) { if (!STATE.sheetConnected) return; await sheet
 // ── DIRECTORIES: Folders, Contacts, Locations, People ───────
 async function fetchFolders() {
   const rows = await sheetGetAll(CONFIG.SHEETS.folders);
-  STATE.folders = rows.map(r => ({ id:r['ID']||'', name:r['Name']||'', url:r['URL']||'', desc:r['Description']||'', tags:(r['Tags']||'').split('|').map(t=>t.trim().replace(/^#/,'')).filter(Boolean) })).filter(r=>r.id);
+  STATE.folders = rows.map(r => ({ id:r['ID']||'', name:r['Name']||'', url:r['URL']||'', desc:r['Description']||'', tags:parseTagList(r['Tags']) })).filter(r=>r.id);
 }
 async function saveFolder(f) {
   if (!STATE.sheetConnected) return;
@@ -3585,7 +3598,7 @@ async function deleteFolder(id) { if (!STATE.sheetConnected) return; await sheet
 
 async function fetchContacts() {
   const rows = await sheetGetAll(CONFIG.SHEETS.contacts);
-  STATE.contacts = rows.map(r => ({ id:r['ID']||'', name:r['Name']||'', position:r['Position']||'', phone:r['Phone']||'', email:r['Email']||'', company:r['Company']||'', notes:r['Notes']||'', tags:(r['Tags']||'').split('|').map(t=>t.trim().replace(/^#/,'')).filter(Boolean) })).filter(r=>r.id);
+  STATE.contacts = rows.map(r => ({ id:r['ID']||'', name:r['Name']||'', position:r['Position']||'', phone:r['Phone']||'', email:r['Email']||'', company:r['Company']||'', notes:r['Notes']||'', tags:parseTagList(r['Tags']) })).filter(r=>r.id);
 }
 async function saveContact(c) {
   if (!STATE.sheetConnected) return;
@@ -3600,7 +3613,7 @@ async function deleteContact(id) { if (!STATE.sheetConnected) return; await shee
 
 async function fetchLocations() {
   const rows = await sheetGetAll(CONFIG.SHEETS.locations);
-  STATE.locations = rows.map(r => ({ id:r['ID']||uid('L'), name:r['Name']||'', address:r['Address']||'', mapUrl:r['MapURL']||'', notes:r['Notes']||'', company:r['Company']||'', phone:r['Phone']||'', tags:(r['Tags']||'').split('|').map(t=>t.trim().replace(/^#/,'')).filter(Boolean) })).filter(r=>r.name);
+  STATE.locations = rows.map(r => ({ id:r['ID']||uid('L'), name:r['Name']||'', address:r['Address']||'', mapUrl:r['MapURL']||'', notes:r['Notes']||'', company:r['Company']||'', phone:r['Phone']||'', tags:parseTagList(r['Tags']) })).filter(r=>r.name);
 }
 async function saveLocation(l) {
   if (!STATE.sheetConnected) return;
@@ -3859,172 +3872,6 @@ function renderAll() {
   try { renderStickyLayer(); } catch(e) { console.error('renderStickyLayer failed:', e); }
 }
 
-/* ── OVERVIEW ── */
-
-// ── KPI CARDS ────────────────────────────────────────────────
-// getKpiCards: computes live metrics from STATE.items
-// kpiCardsHTML: renders clickable KPI card grid HTML
-// openKpiTaskList: drill-down modal showing matching tasks
-function getKpiCards() {
-  const k = kpis();
-  const todayStr = fmtDate(TODAY);
-  const weekStart = new Date(TODAY); weekStart.setDate(TODAY.getDate() - ((TODAY.getDay()+6)%7));
-  const weekEnd   = new Date(weekStart); weekEnd.setDate(weekStart.getDate() + 4);
-  const ws = fmtDate(weekStart), we = fmtDate(weekEnd);
-  return [
-    { label:'Total Tasks',    value:k.total,       color:'var(--accent2)', glow:'#285C70', icon:'📋', sub:`${k.done} completed`,
-      filter: () => getTasks() },
-    { label:'Completed',      value:k.done,        color:'var(--green)',   glow:'#34D399', icon:'✅', sub:`${k.rate}% of all tasks`,
-      filter: () => getTasks().filter(t=>parseStatus(t.status).state==='Completed') },
-    { label:'In Progress',    value:k.inProgress,  color:'var(--yellow)',  glow:'#FBBF24', icon:'🔄', sub:'working + in review',
-      filter: () => getTasks().filter(t=>parseStatus(t.status).state==='In Progress'||parseStatus(t.status).state==='Review') },
-    { label:'Pending',        value:k.pending,     color:'var(--muted)',   glow:'#64748B', icon:'📭', sub:'backlog + to do',
-      filter: () => getTasks().filter(t=>parseStatus(t.status).state==='Backlog'||parseStatus(t.status).state==='To Do') },
-    { label:'Overdue',        value:k.overdue,     color:'var(--red)',     glow:'#F87171', icon:'🔴', sub:'need attention',
-      filter: () => getTasks().filter(t=>t.dueDate && daysUntil(t.dueDate)<0 && t.status!=='Completed') },
-    { label:'Due Today',      value:k.dueToday,    color:'var(--orange)',  glow:'#FB923C', icon:'📅', sub:'today',
-      filter: () => getTasks().filter(t=>t.dueDate===todayStr && t.status!=='Completed') },
-    { label:'Due This Week',  value:k.dueThisWeek, color:'var(--cyan)',    glow:'#22D3EE', icon:'📆', sub:'Mon–Sun this week',
-      filter: () => getTasks().filter(t=>t.dueDate>=ws && t.dueDate<=we && t.status!=='Completed') },
-    { label:'High Priority',  value:k.highPri,     color:'var(--purple)',  glow:'#C084FC', icon:'🚨', sub:'critical + high',
-      filter: () => getTasks().filter(t=>(t.priority==='High'||t.priority==='Critical') && t.status!=='Completed') },
-  ];
-}
-
-// Render KPI cards HTML — clickable, each opens a task list modal
-function kpiCardsHTML(cards) {
-  return cards.map((c, idx) => `<div class="kpi-card" onclick="openKpiTaskList(${idx})" style="cursor:pointer" title="Click to see tasks">
-    <div class="kpi-accent" style="background:${c.glow}"></div>
-    <div class="kpi-glow" style="background:${c.glow}"></div>
-    <span class="kpi-icon">${c.icon}</span>
-    <span class="kpi-label">${c.label}</span>
-    <span class="kpi-value" style="color:${getColColor(c)}">${c.value}</span>
-    <span class="kpi-sub">${c.sub}</span>
-  </div>`).join('');
-}
-
-// KPI click → modal showing the matching tasks
-function openKpiTaskList(cardIdx) {
-  const cards = getKpiCards();
-  const card  = cards[cardIdx];
-  const tasks = card.filter();
-  _renderKpiTaskList(cardIdx, tasks, card);
-}
-
-function _renderKpiTaskList(cardIdx, tasks, card) {
-  const listHTML = tasks.length === 0
-    ? `<div style="text-align:center;padding:28px 0;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">${card.icon}</div><div>No tasks here</div></div>`
-    : tasks.map(t => {
-        const pri  = getPri(t.priority);
-        const days = daysUntil(t.dueDate);
-        let dueLabel = '';
-        if (days !== null) {
-          if (days < 0)      dueLabel = `<span class="due-chip due-over">${Math.abs(days)}d Over</span>`;
-          else if (days===0) dueLabel = `<span class="due-chip due-today">Today</span>`;
-          else if (days<=2)  dueLabel = `<span class="due-chip due-warn">${days}d</span>`;
-          else               dueLabel = `<span class="due-chip due-ok">${days}d</span>`;
-        }
-        const tagsHTML = (t.tags||[]).slice(0,3).map(tag =>
-          `<button class="tag-btn t-tag" style="${(tc=>'background:'+tc.bg+';color:'+tc.text+';border-color:'+tc.border)(tagColor(tag))}" onclick="event.stopPropagation();_navTo(()=>openKpiTaskList(${cardIdx}),()=>openTagList('${tag}'))" title="View all #${tag} items"><span style="opacity:0.5">#</span>${tag}</button>`).join('');
-        const _tState = parseStatus(t.status).state || t.status;
-        const statusColor = { Backlog:'var(--muted)', 'To Do':'var(--accent2)', 'In Progress':'var(--cyan)', Review:'var(--yellow)', Completed:'var(--green)' }[_tState] || 'var(--muted)';
-        return `<div onclick="_navTo(()=>openKpiTaskList(${cardIdx}),()=>openKpiTaskDetail('${t.id}',${cardIdx}))"
-          style="background:var(--surface);border:1px solid var(--border);border-left:3px solid ${pri.bar||pri.bg};border-radius:11px;padding:12px 14px;cursor:pointer;transition:all 0.15s"
-          onmouseover="this.style.background='var(--glass2)'" onmouseout="this.style.background='var(--surface)'">
-          <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px">
-            <span style="font-size:8px;font-family:var(--mono);color:var(--muted)">${t.id}</span>
-            <span style="font-size:9px;padding:1px 7px;border-radius:20px;background:rgba(0,0,0,0.2);color:${statusColor};border:1px solid ${statusColor};opacity:0.85;font-weight:600">${_tState}</span>
-          </div>
-          <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;${parseStatus(t.status).state==='Completed'?'text-decoration:line-through;opacity:0.6':''}">${t.title}</div>
-          ${t.desc ? `<div style="font-size:11px;color:var(--text2);margin-bottom:6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">${t.desc}</div>` : ''}
-          <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:6px">
-            <span class="t-tag" style="background:${pri.bg};color:${pri.text}">${t.priority}</span>
-            ${tagsHTML}
-          </div>
-          <div style="display:flex;align-items:center;gap:6px">
-            ${renderAssigneeStack(t.assignees||'', false, t.type)}
-            <div style="margin-left:auto;display:flex;gap:4px;align-items:center">
-              ${dueLabel}
-            </div>
-          </div>
-        </div>`;
-      }).join('');
-
-  openModal(`
-    <div class="modal-title">
-      <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:20px">${card.icon}</span>
-        <div>
-          <div style="font-size:18px;font-weight:700">${card.label}</div>
-          <div style="font-size:12px;color:var(--muted)">${tasks.length} task${tasks.length!==1?'s':''} · click to view details</div>
-        </div>
-      </div>
-      <button class="modal-close" onclick="clearNav()">✕</button>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:8px;max-height:60vh;overflow-y:auto;padding-right:4px">${listHTML}</div>
-    <div class="modal-actions" style="margin-top:16px"></div>`);
-}
-
-// Opens task detail inside the KPI flow — with a ‹ Back button to the KPI list
-function openKpiTaskDetail(taskId, kpiCardIdx) {
-  const item = STATE.items.find(i => i.id === taskId);
-  if (!item) return;
-
-  const typeIcon  = { task:'📋', event:'📆', entry:'📝' }[item.type] || '📄';
-  const typeLabel = { task:'Task', event:'Event', entry:'Entry' }[item.type] || item.type;
-  const pri = getPri(item.priority);
-
-  const row = (label, value) => value
-    ? `<div class="detail-row"><span class="detail-label">${label}</span><span class="detail-value">${value}</span></div>`
-    : '';
-
-  const fmtDisplayDate = str => {
-    if (!str) return '';
-    const d = new Date(str + 'T00:00:00');
-    return d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
-  };
-
-  const dateField  = item.type === 'task' ? item.dueDate : item.date;
-  const startField = item.type === 'task' ? item.startDate : '';
-  const tagsStr    = Array.isArray(item.tags) ? item.tags.join(', ') : (item.tags||'');
-  const timeStr    = fmtTimeRange(item.time, item.endTime);
-
-  openModal(`
-    <div class="modal-title" style="align-items:flex-start;flex-direction:column;gap:8px">
-      <div style="display:flex;justify-content:space-between;width:100%;align-items:center">
-        <span style="display:flex;align-items:center;gap:8px">
-          ${typeIcon}
-          <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;padding:3px 9px;border-radius:20px;background:${pri.bg};color:${pri.text}">${typeLabel}</span>
-          ${item.priority ? `<button class="status-badge-btn" style="font-size:10px;padding:3px 9px;background:${pri.bg};color:${pri.text};border-color:${pri.bar}44" onclick="openPriorityDropdown('${item.id}',this,event)" title="Change priority">${item.priority}</button>` : ''}
-        </span>
-        <button class="modal-close" onclick="clearNav()">✕</button>
-      </div>
-      <div style="font-size:18px;font-weight:700;color:var(--text);line-height:1.3">${item.title}</div>
-      <div style="font-size:11px;color:var(--muted);font-family:var(--mono)">${item.id}</div>
-    </div>
-    <div class="detail-grid">
-      <div class="detail-row"><span class="detail-label">Status</span><span class="detail-value"><button id="detail-status-btn-${item.id}" class="status-badge-btn" style="background:${getStatusColor(getDisplayStatus(item))||'#64748B'}22;color:${getStatusColor(getDisplayStatus(item))||'#64748B'};border-color:${getStatusColor(getDisplayStatus(item))||'#64748B'}44" onclick="openStatusDropdown('${item.id}',this,event)" title="Change status">${getDisplayStatus(item)}</button>${(()=>{const {doneAt}=parseStatus(item.status);return doneAt?`<span style="font-size:10px;color:var(--muted);margin-left:6px">at ${fmtTime(doneAt.split(' ')[1]||doneAt)}</span>`:'';})()}</span></div>
-      ${row(item.type === 'task' ? 'Due Date' : 'Date', fmtDisplayDate(dateField))}
-      ${row('Start Date', fmtDisplayDate(startField))}
-      ${row('Time', timeStr)}
-      ${row('Category', item.category)}
-      ${row('Project', item.project)}
-      ${row('Assignees', (() => { const parts=(item.assignees||'').split('|').map(s=>s.trim()).filter(Boolean); if(!parts.length) return '—'; if(item.type==='task') return parts[0]+(parts.length>1?' (lead), '+parts.slice(1).join(', '):''); return parts.join(', '); })())}
-      ${(()=>{
-        const tagArr = Array.isArray(item.tags)?item.tags:(item.tags||'').split(',').map(t=>t.trim()).filter(Boolean);
-        if(!tagArr.length) return '';
-        const tagBtns = tagArr.map(t=>`<button class="tag-btn" style="${(tc=>'background:'+tc.bg+';color:'+tc.text+';border-color:'+tc.border)(tagColor(t))}" onclick="_navTo(()=>openTEEDetail('${item.id}'),()=>openTagList('${t}'))" title="View all #${t} items"><span style="opacity:0.5">#</span>${t}</button>`).join(' ');
-        return `<div class="detail-row"><span class="detail-label">Tags</span><span class="detail-value" style="display:flex;flex-wrap:wrap;gap:4px">${tagBtns}</span></div>`;
-      })()}
-    </div>
-    ${item.desc  ? `<div style="margin:12px 0 4px;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.6px">Description</div><div style="font-size:13px;color:var(--text2);line-height:1.6;padding:10px;background:var(--glass);border:1px solid var(--border);border-radius:10px">${item.desc}</div>` : ''}
-    ${item.notes ? `<div style="margin:12px 0 4px;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.6px">Notes</div><div style="font-size:13px;color:var(--text2);line-height:1.6;padding:10px;background:var(--glass);border:1px solid var(--border);border-radius:10px">${item.notes}</div>` : ''}
-    <div class="modal-actions" style="margin-top:20px">
-      ${_backBtn()}
-      <button class="btn-primary" onclick="_navTo(()=>openKpiTaskDetail('${item.id}',${kpiCardIdx}),()=>openTEEModal('${item.id}'))">Edit</button>
-    </div>`);
-}
-
 function _addSubtaskToForm() {
   const input = document.getElementById('tee-subtask-new');
   if (!input) return;
@@ -4077,6 +3924,45 @@ function _subtaskChip(item) {
 }
 
 // ── UNIFIED CHIP & BADGE SYSTEM ─────────────────────────────────────────────
+function _modalCloseBtn(onClickExpr = 'clearNav()') {
+  return `<button class="modal-close" onclick="${onClickExpr}">✕</button>`;
+}
+// Shared "detail view" modal header — used by openTEEDetail.
+// colorSwatch defaults to '' for consumers that don't render one.
+function buildModalDetailHeader(item, typeIcon, typeLabel, pri, colorSwatch = '') {
+  return `<div class="modal-title" style="align-items:flex-start;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;width:100%;align-items:center">
+        <span style="display:flex;align-items:center;gap:8px">
+          ${typeIcon}
+          <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;padding:3px 9px;border-radius:20px;background:${pri.bg};color:${pri.text}">${typeLabel}</span>
+          ${item.priority ? `<button class="status-badge-btn" style="font-size:10px;padding:3px 9px;background:${pri.bg};color:${pri.text};border-color:${pri.bar}44" onclick="openPriorityDropdown('${item.id}',this,event)" title="Change priority">${item.priority}</button>` : ''}
+        </span>
+        ${_modalCloseBtn()}
+      </div>
+      <div style="font-size:18px;font-weight:700;color:var(--text);line-height:1.3">${colorSwatch}${item.title}</div>
+      <div style="font-size:11px;color:var(--muted);font-family:var(--mono)">${item.id}</div>
+    </div>`;
+}
+// Shared "list view" modal header — used by _renderArchiveDrawer.
+// subtitleHTML is passed in already formatted (pluralization/counts computed by the caller).
+function buildModalListHeader(icon, label, subtitleHTML) {
+  return `<div class="modal-title">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:20px">${icon}</span>
+        <div>
+          <div style="font-size:18px;font-weight:700">${label}</div>
+          <div style="font-size:12px;color:var(--muted)">${subtitleHTML}</div>
+        </div>
+      </div>
+      ${_modalCloseBtn()}
+    </div>`;
+}
+function _chipStyle(key, withBorder = false) {
+  const c = getChipColor(key);
+  return withBorder
+    ? `background:${c.bg};color:${c.text};border:1px solid ${c.border};`
+    : `background:${c.bg};color:${c.text};`;
+}
 // Group 1 — Context chips: label the DATE RELATIONSHIP (today/overdue/starts)
 // _buildContextChips(t) returns HTML for all applicable Group 1 chips
 function _buildContextChips(t, refDate) {
@@ -4085,19 +3971,18 @@ function _buildContextChips(t, refDate) {
   const st       = parseStatus(t.status).state;
   const done     = st === 'Completed' || st === 'Done';
   let chips      = '';
-  const _cs = key => { const c = getChipColor(key); return `background:${c.bg};color:${c.text};border:1px solid ${c.border};`; };
 
   // Overdue — past due date relative to refDate, not completed
   if (!done && t.dueDate && t.dueDate < refStr) {
-    chips += `<span class="ctx-chip" style="${_cs('overdue')}">Overdue</span>`;
+    chips += `<span class="ctx-chip" style="${_chipStyle('overdue', true)}">Overdue</span>`;
   }
   // Due Today — due date matches the reference date
   if (!done && t.dueDate === refStr) {
-    chips += `<span class="ctx-chip" style="${_cs('dueToday')}">Due Today</span>`;
+    chips += `<span class="ctx-chip" style="${_chipStyle('dueToday', true)}">Due Today</span>`;
   }
   // Starts Today — start date matches reference date (tasks only)
   if (!done && t.startDate && t.startDate === refStr && t.dueDate !== refStr) {
-    chips += `<span class="ctx-chip" style="${_cs('startsToday')}">Starts Today</span>`;
+    chips += `<span class="ctx-chip" style="${_chipStyle('startsToday', true)}">Starts Today</span>`;
   }
   return chips;
 }
@@ -4109,11 +3994,10 @@ function _buildCounterChip(dueDate, refDate) {
   // refDate: YYYY-MM-DD string — defaults to real today if not passed
   const days = daysBetween(refDate || null, dueDate);
   if (days === null) return '';
-  const _cs = key => { const c = getChipColor(key); return `background:${c.bg};color:${c.text};`; };
-  if (days < 0)  return `<span class="due-chip" style="${_cs('counterOver')}">${Math.abs(days)}d Over</span>`;
-  if (days === 0) return `<span class="due-chip" style="${_cs('counterToday')}">Today</span>`;
-  if (days <= 2)  return `<span class="due-chip" style="${_cs('counterWarn')}">${days}d</span>`;
-  return `<span class="due-chip" style="${_cs('counterOk')}">${days}d</span>`;
+  if (days < 0)  return `<span class="due-chip" style="${_chipStyle('counterOver')}">${Math.abs(days)}d Over</span>`;
+  if (days === 0) return `<span class="due-chip" style="${_chipStyle('counterToday')}">Today</span>`;
+  if (days <= 2)  return `<span class="due-chip" style="${_chipStyle('counterWarn')}">${days}d</span>`;
+  return `<span class="due-chip" style="${_chipStyle('counterOk')}">${days}d</span>`;
 }
 
 // ── Badge builders ────────────────────────────────────────────────────────────
@@ -4129,6 +4013,17 @@ function _buildStatusBadge(t) {
   const _disp  = getDisplayStatus(t);
   const _color = getStatusColor(_disp);
   return `<button class="status-badge-btn" style="background:${_color}22;color:${_color};border-color:${_color}44" onclick="openStatusDropdown('${t.id}',this,event)" title="Change status">${_disp}</button>`;
+}
+// Detail-modal status row — renders the Status detail-row for item detail modals.
+// Includes the status button (with id for in-place DOM update) and optional doneAt suffix.
+// Used by openTEEDetail().
+function _buildDetailStatusRow(item) {
+  const _sc = getStatusColor(getDisplayStatus(item)) || '#64748B';
+  const {doneAt} = parseStatus(item.status);
+  const _doneAtHTML = doneAt
+    ? `<span style="font-size:10px;color:var(--muted);margin-left:6px">at ${fmtTime(doneAt.split(' ')[1]||doneAt)}</span>`
+    : '';
+  return `<div class="detail-row"><span class="detail-label">Status</span><span class="detail-value"><button id="detail-status-btn-${item.id}" class="status-badge-btn" style="background:${_sc}22;color:${_sc};border-color:${_sc}44" onclick="openStatusDropdown('${item.id}',this,event)" title="Change status">${getDisplayStatus(item)}</button>${_doneAtHTML}</span></div>`;
 }
 
 // Type badge — non-clickable label (Task / Event / Entry)
@@ -4146,6 +4041,18 @@ function _buildTypeBadge(type) {
 function _buildTagChip(tag) {
   const tc = tagColor(tag);
   return `<button class="tag-btn gt-tag" style="background:${tc.bg};color:${tc.text};border-color:${tc.border}" onclick="event.stopPropagation();openTagList('${tag}')"><span style="opacity:0.5">#</span>${tag}</button>`;
+}
+// Detail-modal tag row — renders the Tags detail-row for item detail modals.
+// reopenExpr: string expression that reopens the current modal, e.g. "openTEEDetail('T-001')"
+// Used by openTEEDetail().
+function _buildDetailTagRow(tags, reopenExpr) {
+  const tagArr = Array.isArray(tags) ? tags : (tags||'').split(',').map(t=>t.trim()).filter(Boolean);
+  if (!tagArr.length) return '';
+  const tagBtns = tagArr.map(t => {
+    const tc = tagColor(t);
+    return `<button class="tag-btn" style="background:${tc.bg};color:${tc.text};border-color:${tc.border}" onclick="_navTo(()=>${reopenExpr},()=>openTagList('${t}'))" title="View all #${t} items"><span style="opacity:0.5">#</span>${t}</button>`;
+  }).join(' ');
+  return `<div class="detail-row"><span class="detail-label">Tags</span><span class="detail-value" style="display:flex;flex-wrap:wrap;gap:4px">${tagBtns}</span></div>`;
 }
 
 // Extract trailing hashtags from note text — safety net for manually typed tags
@@ -4182,7 +4089,7 @@ function getAllKnownTags() {
 
 // Left accent border style based on priority
 function _buildAccentBorder(priority) {
-  const isDark  = document.documentElement.getAttribute('data-theme') !== 'light';
+  const isDark  = isDarkTheme();
   const accents = {
     Critical: isDark ? '#F87171' : '#DC2626',
     High:     isDark ? '#FB923C' : '#EA580C',
@@ -4375,11 +4282,11 @@ function tagColor(tagName) {
   // User-defined color takes priority
   if (TAG_CUSTOM[key]) {
     const c = TAG_CUSTOM[key];
-    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+    const isDark = isDarkTheme();
     const alpha = isDark ? '22' : '18';
     return { bg: c + alpha, text: c, border: c + '55' };
   }
-  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  const isDark = isDarkTheme();
   const palette = isDark ? TAG_PALETTE_DARK : TAG_PALETTE_LIGHT;
   let h = 0;
   for (let i = 0; i < tagName.length; i++) h = (h * 31 + tagName.charCodeAt(i)) & 0x7fffffff;
@@ -4450,7 +4357,7 @@ function openTagColorEditor(tagName, anchorEl, event) {
   event.stopPropagation();
   var existing = document.getElementById('tag-color-editor');
   if (existing) { existing.remove(); return; }
-  var isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  var isDark = isDarkTheme();
   var palD = ['#4F9AB5','#8B5CF6','#F59E0B','#10B981','#F472B6','#60A5FA','#34D399','#FB923C','#EF4444','#22D3EE'];
   var palL = ['#0E7490','#6D28D9','#B45309','#166534','#BE185D','#1D4ED8','#15803D','#C2410C','#DC2626','#0891B2'];
   var palette = isDark ? palD : palL;
@@ -4710,6 +4617,17 @@ function buildAssigneesStr(lead, contributors) {
   const all = [lead, ...(contributors || [])].map(s => (s||'').trim()).filter(Boolean);
   return all.join('|');
 }
+// Split "Lead|Contrib1|Contrib2" into a clean array of names
+function splitAssigneeNames(str) {
+  return (str||'').split('|').map(s=>s.trim()).filter(Boolean);
+}
+// Format assignees for detail-view display: "Lead (lead), Contrib1, Contrib2"
+function formatAssigneesDisplay(item) {
+  const parts = (item.assignees||'').split('|').map(s=>s.trim()).filter(Boolean);
+  if (!parts.length) return '—';
+  if (item.type==='task') return parts[0]+(parts.length>1?' (lead), '+parts.slice(1).join(', '):'');
+  return parts.join(', ');
+}
 
 // Render avatar — photo if available, else colored initials circle
 // For Google Drive: we expect thumbnail URL (auto-converted on input)
@@ -4787,114 +4705,6 @@ function renderAssigneeStack(assigneesStr, compact, itemType) {
   const overflowEl = overflow > 0 ? `<div class="av av-contrib av-more" title="${overflow} more">+${overflow}</div>` : '';
 
   return `<div class="av-stack">${leadAvEl}${contribEls}${overflowEl}</div><span class="t-name">${leadFirst}${contributors.length > 0 ? ` +${contributors.length}` : ''}</span>`;
-}
-// openTodayTypeList: filtered list modal (tasks/events/entries)
-// openTodayItemDetail: detail view with ‹ Back to type list — with back button to Today tab
-function openTodayTypeList(type) {
-  const todayStr = fmtDate(TODAY);
-  const typeLabels = { task:'Tasks Due Today', event:"Today's Events", entry:"Today's Entries" };
-  const typeIcons  = { task:'📋', event:'📆', entry:'📝' };
-  const todayItems = itemsOnDate(todayStr).filter(i => i.type === type);
-
-  const listHTML = todayItems.length === 0
-    ? `<div style="text-align:center;padding:28px 0;color:var(--muted)">
-        <div style="font-size:28px;margin-bottom:8px">${typeIcons[type]}</div>
-        <div>Nothing here for today</div>
-       </div>`
-    : todayItems.map(i => {
-        const pri  = getPri(i.priority);
-        const days = i.type==='task' ? daysUntil(i.dueDate) : null;
-        let dueLabel = '';
-        if (days !== null) {
-          if (days < 0)      dueLabel = `<span class="due-chip due-over">${Math.abs(days)}d Over</span>`;
-          else if (days===0) dueLabel = `<span class="due-chip due-today">Today</span>`;
-        }
-        const timeStr = fmtTimeRange(i.time, i.endTime);
-        return `<div class="day-list-item" onclick="_navTo(()=>openTodayTypeList('${type}'),()=>openTodayItemDetail('${i.id}','${type}'))">
-          <span style="font-size:16px;flex-shrink:0">${typeIcons[type]}</span>
-          <div style="flex:1;min-width:0">
-            <div style="font-size:14px;font-weight:600;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">${i.title}</div>
-            <div style="font-size:11px;color:var(--text2);margin-top:2px">
-              ${timeStr ? `🕐 ${timeStr}` : ''}
-              ${i.assignee ? ` · ${i.assignee}` : ''}
-              ${i.status ? ` · ${i.status}` : ''}
-            </div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">
-            <span style="font-size:10px;padding:2px 7px;border-radius:20px;background:${pri.bg};color:${pri.text}">${i.priority}</span>
-            ${dueLabel}
-          </div>
-        </div>`;
-      }).join('');
-
-  openModal(`
-    <div class="modal-title">
-      <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:20px">${typeIcons[type]}</span>
-        <div>
-          <div style="font-size:18px;font-weight:700">${typeLabels[type]}</div>
-          <div style="font-size:12px;color:var(--muted)">${todayItems.length} item${todayItems.length!==1?'s':''}</div>
-        </div>
-      </div>
-      <button class="modal-close" onclick="clearNav()">✕</button>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:8px;max-height:60vh;overflow-y:auto;padding-right:4px">${listHTML}</div>
-    <div class="modal-actions" style="margin-top:16px">
-      ${_backBtn()}
-      <button class="btn-primary" onclick="clearNav();openTEEModal(null,'${type}','${todayStr}')">+ Add ${type}</button>
-    </div>`);
-}
-
-// Opens detail from today type list with back button
-function openTodayItemDetail(itemId, type) {
-  const item = STATE.items.find(i => i.id === itemId);
-  if (!item) return;
-
-  const typeIcon  = { task:'📋', event:'📆', entry:'📝' }[item.type] || '📄';
-  const typeLabel = { task:'Task', event:'Event', entry:'Entry' }[item.type] || item.type;
-  const pri = getPri(item.priority);
-  const row = (label, value) => value ? `<div class="detail-row"><span class="detail-label">${label}</span><span class="detail-value">${value}</span></div>` : '';
-  const fmtDisplayDate = str => { if (!str) return ''; return new Date(str+'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'}); };
-  const dateField  = item.type==='task' ? item.dueDate : item.date;
-  const startField = item.type==='task' ? item.startDate : '';
-  const timeStr    = fmtTimeRange(item.time, item.endTime);
-  const tagsStr    = Array.isArray(item.tags) ? item.tags.join(', ') : (item.tags||'');
-  const colorSwatch = (item.type==='event'&&item.color) ? `<span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${item.color};margin-right:4px;vertical-align:middle"></span>` : '';
-
-  openModal(`
-    <div class="modal-title" style="align-items:flex-start;flex-direction:column;gap:8px">
-      <div style="display:flex;justify-content:space-between;width:100%;align-items:center">
-        <span style="display:flex;align-items:center;gap:8px">
-          ${typeIcon}
-          <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;padding:3px 9px;border-radius:20px;background:${pri.bg};color:${pri.text}">${typeLabel}</span>
-          ${item.priority?`<button class="status-badge-btn" style="font-size:10px;padding:3px 9px;background:${pri.bg};color:${pri.text};border-color:${pri.bar}44" onclick="openPriorityDropdown('${item.id}',this,event)" title="Change priority">${item.priority}</button>`:''}
-        </span>
-        <button class="modal-close" onclick="clearNav()">✕</button>
-      </div>
-      <div style="font-size:18px;font-weight:700;color:var(--text);line-height:1.3">${colorSwatch}${item.title}</div>
-      <div style="font-size:11px;color:var(--muted);font-family:var(--mono)">${item.id}</div>
-    </div>
-    <div class="detail-grid">
-      ${item.type==='task'?`<div class="detail-row"><span class="detail-label">Status</span><span class="detail-value"><button id="detail-status-btn-${item.id}" class="status-badge-btn" style="background:${getStatusColor(getDisplayStatus(item))||'#64748B'}22;color:${getStatusColor(getDisplayStatus(item))||'#64748B'};border-color:${getStatusColor(getDisplayStatus(item))||'#64748B'}44" onclick="openStatusDropdown('${item.id}',this,event)" title="Change status">${getDisplayStatus(item)}</button>${(()=>{const {doneAt}=parseStatus(item.status);return doneAt?`<span style="font-size:10px;color:var(--muted);margin-left:6px">at ${fmtTime(doneAt.split(' ')[1]||doneAt)}</span>`:'';})()}</span></div>`:''}
-      ${row(item.type==='task'?'Due Date':'Date', fmtDisplayDate(dateField))}
-      ${row('Start Date', fmtDisplayDate(startField))}
-      ${row('Time', timeStr)}
-      ${row('Category', item.category)}
-      ${row('Project', item.project)}
-      ${row('Assignees', (() => { const parts=(item.assignees||'').split('|').map(s=>s.trim()).filter(Boolean); if(!parts.length) return '—'; if(item.type==='task') return parts[0]+(parts.length>1?' (lead), '+parts.slice(1).join(', '):''); return parts.join(', '); })())}
-      ${(()=>{
-        const tagArr = Array.isArray(item.tags)?item.tags:(item.tags||'').split(',').map(t=>t.trim()).filter(Boolean);
-        if(!tagArr.length) return '';
-        const tagBtns = tagArr.map(t=>`<button class="tag-btn" style="${(tc=>'background:'+tc.bg+';color:'+tc.text+';border-color:'+tc.border)(tagColor(t))}" onclick="_navTo(()=>openTodayItemDetail('${item.id}','${type}'),()=>openTagList('${t}'))" title="View all #${t} items"><span style="opacity:0.5">#</span>${t}</button>`).join(' ');
-        return `<div class="detail-row"><span class="detail-label">Tags</span><span class="detail-value" style="display:flex;flex-wrap:wrap;gap:4px">${tagBtns}</span></div>`;
-      })()}
-    </div>
-    ${item.desc?`<div style="margin:12px 0 4px;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.6px">Description</div><div style="font-size:13px;color:var(--text2);line-height:1.6;padding:10px;background:var(--glass);border:1px solid var(--border);border-radius:10px">${item.desc}</div>`:''}
-    ${item.notes?`<div style="margin:12px 0 4px;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.6px">Notes</div><div style="font-size:13px;color:var(--text2);line-height:1.6;padding:10px;background:var(--glass);border:1px solid var(--border);border-radius:10px">${item.notes}</div>`:''}
-    <div class="modal-actions" style="margin-top:20px">
-      ${_backBtn()}
-      <button class="btn-primary" onclick="clearNav();openTEEModal('${item.id}')">Edit</button>
-    </div>`);
 }
 // ── Top-level helper: is person active today? ───────────────
 function isPersonActiveToday(p) {
@@ -5003,7 +4813,7 @@ function renderPeople() {
   }
 
   // ── Pill strip ────────────────────────────────────────────────
-  const _wasSearchFocused = document.activeElement && document.activeElement.id === 'pp-search-input';
+  const _wasSearchFocused = _captureSearchFocus('pp-search-input');
   const pillsHTML = ''
     + '<button class="kb-pill' + (f.context==='all'?' active':'') + '" onclick="_ppSetContext(' + "'all'" + ')">'
     + '<span class="kb-pill-num">' + cAll + '</span> ALL</button>'
@@ -5050,13 +4860,10 @@ function renderPeople() {
     + '<div class="kb-pill-strip" style="margin-bottom:16px">' + pillsHTML + '</div>'
     + '<div class="person-grid">' + gridHTML + '</div>';
 
-  if (_wasSearchFocused) {
-    const si = document.getElementById('pp-search-input');
-    if (si) { si.focus(); si.setSelectionRange(si.value.length, si.value.length); }
-  }
+  _restoreSearchFocus('pp-search-input', _wasSearchFocused);
 }
 
-// Used by renderOverview (Today + People tabs)
+// Used by renderPeople (People tab)
 function buildPersonCard(p, showActiveBadge, timeframe) {
   const todayStr   = fmtDate(TODAY);
   const weekEnd    = new Date(TODAY); weekEnd.setDate(weekEnd.getDate() + 6);
@@ -5320,7 +5127,7 @@ function renderOverview() {
   };
 
   // ── PRIMARY PILL BUILDER ──────────────────────────────────────────────────
-  const _isLightTheme = document.documentElement.getAttribute('data-theme') === 'light';
+  const _isLightTheme = !isDarkTheme();
   const mkPrimaryPill = (key, count, label, hex) => {
     const active = group === key;
     const bgAlpha = _isLightTheme ? '20' : '18';
@@ -5686,10 +5493,11 @@ function renderOverview() {
   });
 
      // ── Pinned notes panel ──
-  const pinnedNotes = [...STATE.stickies].filter(s=>s.pinned)
-    .sort((a,b)=>(parseInt((b.id||'').replace(/\D/g,''),10)||0)-(parseInt((a.id||'').replace(/\D/g,''),10)||0));
+  const buildPinnedNotesPanel = () => {
+    const pinnedNotes = [...STATE.stickies].filter(s=>s.pinned)
+      .sort((a,b)=>(parseInt((b.id||'').replace(/\D/g,''),10)||0)-(parseInt((a.id||'').replace(/\D/g,''),10)||0));
 
-  const pinnedPanelHTML = `<div class="gt-panel-card gt-notes-card">
+    return `<div class="gt-panel-card gt-notes-card">
     <div class="gt-panel-hdr" style="flex-shrink:0">
       <span class="gt-panel-title">📌 Pinned Notes</span>
       <button class="btn-ghost" style="height:24px;padding:0 8px;font-size:11px" onclick="openPinnedNoteModal()">+ Pinned Note</button>
@@ -5709,9 +5517,11 @@ function renderOverview() {
     }
     </div>
   </div>`;
+  };
+  const pinnedPanelHTML = buildPinnedNotesPanel();
 
   // ── Mini calendar ──
-  const miniCalHTML = (() => {
+  const buildMiniCalendar = () => {
     const yr = TODAY.getFullYear(), mo = TODAY.getMonth();
     const firstDay  = new Date(yr,mo,1).getDay();
     const daysInMo  = new Date(yr,mo+1,0).getDate();
@@ -5745,7 +5555,8 @@ function renderOverview() {
       <div class="gt-mc-grid">${dayLabels}${cells}</div>
       <div class="gt-mc-legend"><span><i style="background:var(--accent2)"></i>Has items</span></div>
     </div>`;
-  })();
+  };
+  const miniCalHTML = buildMiniCalendar();
 
   // ── Today header: bold title left, date right ──
   const todayDateStr = TODAY.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
@@ -5773,34 +5584,6 @@ function renderOverview() {
         <div class="gt-cal-section">${miniCalHTML}</div>
       </div>
     </div>`;
-
-  // ── People tab ──
-  const peopleEl = document.getElementById('peopleSection');
-  if (peopleEl) {
-    const sortedPeople = [...STATE.people].sort((a,b)=>{
-      const aA=isPersonActiveToday(a)?1:0,bA=isPersonActiveToday(b)?1:0;
-      if(bA!==aA) return bA-aA;
-      const aL=allTasks.filter(t=>parseAssignees(t.assignees||'').lead===a.name).length;
-      const bL=allTasks.filter(t=>parseAssignees(t.assignees||'').lead===b.name).length;
-      if(bL!==aL) return bL-aL;
-      const aC=allTasks.filter(t=>parseAssignees(t.assignees||'').contributors.includes(a.name)).length;
-      const bC=allTasks.filter(t=>parseAssignees(t.assignees||'').contributors.includes(b.name)).length;
-      return bC-aC;
-    });
-    peopleEl.innerHTML = `
-      <div class="chip">👥 Team</div>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-        <div>
-          <div class="section-title">Team</div>
-          <div style="font-size:12px;color:var(--text2)">${STATE.people.length} members · <span style="color:var(--green)">●</span> Active today = involved in today's tasks, events, or entries</div>
-        </div>
-        <button class="btn-primary" onclick="openPersonModal(null)">+ Add Person</button>
-      </div>
-      <div class="person-grid">
-        ${sortedPeople.map(p=>buildPersonCard(p,true)).join('')}
-        <div class="add-person-btn" onclick="openPersonModal(null)"><span class="plus">+</span><span>Add Team Member</span></div>
-      </div>`;
-  }
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -5912,87 +5695,13 @@ function renderPlanner() {
 
   // ── Priority CSS class helper ───────────────────────────────────────
   // ── Theme + shared values ────────────────────────────────────────
-  const _isLT = document.documentElement.getAttribute('data-theme') === 'light';
+  const _isLT = !isDarkTheme();
   const _bgA  = _isLT ? '20' : '18';
 
   const ppClass = p =>
     p==='Critical' ? 'pp-crit' :
     p==='High'     ? 'pp-high' :
     p==='Medium'   ? 'pp-med'  : 'pp-low';
-
-window._kbSetPriority = (val) => { STATE.kanbanFilter.priority = val; document.querySelectorAll('.kb-float').forEach(el=>el.remove()); renderBoard(); };
-window._kbSetAssignee = (val) => { STATE.kanbanFilter.assignee = val; document.querySelectorAll('.kb-float').forEach(el=>el.remove()); renderBoard(); };
-window._kbOpenFloat = function(btnEl, html) {
-  // Toggle if already open from same button
-  const existing = document.querySelector('.kb-float');
-  if (existing) { existing.remove(); return; }
-  const float = document.createElement('div');
-  float.className = 'kb-float';
-  float.innerHTML = html;
-  document.body.appendChild(float);
-  const rect = btnEl.getBoundingClientRect();
-  float.style.top  = (rect.bottom + 6) + 'px';
-  float.style.left = rect.left + 'px';
-  setTimeout(() => {
-    document.addEventListener('click', function _close(e) {
-      if (!float.contains(e.target) && !btnEl.contains(e.target)) {
-        float.remove();
-        document.removeEventListener('click', _close);
-      }
-    });
-  }, 0);
-}
-window._kbOpenPriFloat = (btnEl) => window._kbOpenFloat(btnEl, STATE._kbPriFloatHTML);
-window._kbOpenAssigneeFloat = (btnEl) => window._kbOpenFloat(btnEl, STATE._kbAssigneeFloatHTML);
-// ── RESOURCES TAG FILTER FUNCTIONS ─────────────────────────────
-// ── PEOPLE FILTER FUNCTIONS ────────────────────────────────────
-window._ppSetContext = (val) => {
-  STATE.peopleFilter.context = val;
-  renderPeople();
-}; // val: 'all'|'today'|'week'|'idle'
-
-window._dirSetSort = (val) => {
-  STATE.dirSort = val;
-  renderDirectories();
-};
-window._dirSwitchTab = (tabId) => {
-  STATE.dirTab = tabId;
-  STATE.dirSearch = '';
-  STATE.dirTags = [];
-  renderDirectories();
-};
-window._dirAddTag = (tag) => {
-  if (!STATE.dirTags.includes(tag)) STATE.dirTags.push(tag);
-  const f = document.querySelector('.kb-float');
-  if (f) f.remove();
-  renderDirectories();
-};
-window._dirRemoveTag = (tag) => {
-  STATE.dirTags = STATE.dirTags.filter(t => t !== tag);
-  renderDirectories();
-};
-window._dirOpenTagFloat = (btnEl) => window._kbOpenFloat(btnEl, STATE._dirTagFloatHTML);
-
-// ── REMINDERS FILTER FUNCTIONS ─────────────────────────────────
-window._rmSetContext = (val) => {
-  STATE.reminderFilter.context = STATE.reminderFilter.context === val ? 'all' : val;
-  renderReminders();
-};
-window._rmOpenDateFloat = (btnEl) => window._kbOpenFloat(btnEl, STATE._rmDateFloatHTML);
-window._rmOpenTagFloat  = (btnEl) => window._kbOpenFloat(btnEl, STATE._rmTagFloatHTML);
-window._rmSetDate = (val) => {
-  STATE.reminderFilter.date = val;
-  const f = document.querySelector('.kb-float');
-  if (f) f.remove();
-  renderReminders();
-};
-window._rmSetTag = (val) => {
-  STATE.reminderFilter.tag = val;
-  const f = document.querySelector('.kb-float');
-  if (f) f.remove();
-  renderReminders();
-};
-window._kbSetContext = (val) => { STATE.kanbanFilter.context = STATE.kanbanFilter.context === val ? 'all' : val; renderBoard(); };
 
 // Priority sort order: Critical=0, High=1, Medium=2, Low=3, other=4
   const priOrder = p =>
@@ -6047,108 +5756,113 @@ window._kbSetContext = (val) => { STATE.kanbanFilter.context = STATE.kanbanFilte
   const cntEn = allInScope.filter(i => i.type === 'entry').length;
 
   // ── Build shared header ─────────────────────────────────────────────
-  const viewSubLabel = view === 'month' ? 'Month View'
-                     : view === 'week'  ? 'Week View' : 'Day View';
+  const buildPlannerHeader = () => {
+    const viewSubLabel = view === 'month' ? 'Month View'
+                       : view === 'week'  ? 'Week View' : 'Day View';
 
-  const _fHex = {
-    tasks:   _isLT ? '#0F766E' : '#4F9AB5',
-    events:  _isLT ? '#0891B2' : '#22D3EE',
-    entries: _isLT ? '#B45309' : '#FBBF24',
-  };
-  const mkFP = (type, label, count) => {
-    const active  = pf[type];
-    const hex     = _fHex[type];
-    const actSty  = active ? 'border-color:' + hex + ';color:' + hex + ';background:' + hex + _bgA + ';' : '';
-    const cls     = active ? ' active ' + type : '';
-    const oc      = 'STATE.plannerFilter[\''+type+'\']=!STATE.plannerFilter[\''+type+'\'];renderPlanner()';
-    return '<button class="planner-fpill' + cls + '" style="' + actSty + '" onclick="' + oc + '">'
-      + '<span class="planner-fpill-num" style="color:' + (active ? hex : 'var(--text2)') + '">' + count + '</span>'
-      + ' ' + label.toUpperCase()
-      + '</button>';
-  };
+    const _fHex = {
+      tasks:   _isLT ? '#0F766E' : '#4F9AB5',
+      events:  _isLT ? '#0891B2' : '#22D3EE',
+      entries: _isLT ? '#B45309' : '#FBBF24',
+    };
+    const mkFP = (type, label, count) => {
+      const active  = pf[type];
+      const hex     = _fHex[type];
+      const actSty  = active ? 'border-color:' + hex + ';color:' + hex + ';background:' + hex + _bgA + ';' : '';
+      const cls     = active ? ' active ' + type : '';
+      const oc      = 'STATE.plannerFilter[\''+type+'\']=!STATE.plannerFilter[\''+type+'\'];renderPlanner()';
+      return '<button class="planner-fpill' + cls + '" style="' + actSty + '" onclick="' + oc + '">'
+        + '<span class="planner-fpill-num" style="color:' + (active ? hex : 'var(--text2)') + '">' + count + '</span>'
+        + ' ' + label.toUpperCase()
+        + '</button>';
+    };
 
-  let hdr = '<div class="planner-hero">';
+    let hdr = '<div class="planner-hero">';
 
-  // Hero title row
-  hdr += '<div class="planner-hero-row">';
-  hdr += '<span class="planner-hero-title">Planner</span>';
-  hdr += '<span class="planner-hero-sub"> · ' + viewSubLabel + '</span>';
-  hdr += '<button class="btn-primary" style="margin-left:auto;padding:6px 16px;'
-       + 'border-radius:20px;font-size:11px;font-weight:600"'
-       + ' onclick="openTEEModal(null,null,null)">+ Add item</button>';
-  hdr += '</div>';
+    // Hero title row
+    hdr += '<div class="planner-hero-row">';
+    hdr += '<span class="planner-hero-title">Planner</span>';
+    hdr += '<span class="planner-hero-sub"> · ' + viewSubLabel + '</span>';
+    hdr += '<button class="btn-primary" style="margin-left:auto;padding:6px 16px;'
+         + 'border-radius:20px;font-size:11px;font-weight:600"'
+         + ' onclick="openTEEModal(null,null,null)">+ Add item</button>';
+    hdr += '</div>';
 
-  // Nav row — [Month Week Day] [label] [‹ › Today]
-  hdr += '<div class="planner-nav-row">';
+    // Nav row — [Month Week Day] [label] [‹ › Today]
+    hdr += '<div class="planner-nav-row">';
 
-  // Left: view pills
-  hdr += '<div class="planner-view-pills">';
-  const _vHex  = {
-    month: _isLT ? '#0F766E' : '#4F9AB5',
-    week:  _isLT ? '#0E7490' : '#38BDF8',
-    day:   _isLT ? '#166534' : '#34D399',
-  };
-  const _vSty  = (v) => view === v
-    ? 'border-color:' + _vHex[v] + ';color:' + _vHex[v] + ';background:' + _vHex[v] + _bgA + ';'
-    : '';
-  hdr += '<button class="planner-vpill' + (view === 'month' ? ' active' : '') + '"'
-       + ' style="' + _vSty('month') + '"'
-       + ' onclick="_plannerSetView(\'month\')">MONTH</button>';
-  hdr += '<button class="planner-vpill' + (view === 'week'  ? ' active' : '') + '"'
-       + ' style="' + _vSty('week') + '"'
-       + ' onclick="_plannerSetView(\'week\')">WEEK</button>';
-  hdr += '<button class="planner-vpill' + (view === 'day'   ? ' active' : '') + '"'
-       + ' style="' + _vSty('day') + '"'
-       + ' onclick="_plannerSetView(\'day\')">DAY</button>';
-  hdr += '</div>';
+    // Left: view pills
+    hdr += '<div class="planner-view-pills">';
+    const _vHex  = {
+      month: _isLT ? '#0F766E' : '#4F9AB5',
+      week:  _isLT ? '#0E7490' : '#38BDF8',
+      day:   _isLT ? '#166534' : '#34D399',
+    };
+    const _vSty  = (v) => view === v
+      ? 'border-color:' + _vHex[v] + ';color:' + _vHex[v] + ';background:' + _vHex[v] + _bgA + ';'
+      : '';
+    hdr += '<button class="planner-vpill' + (view === 'month' ? ' active' : '') + '"'
+         + ' style="' + _vSty('month') + '"'
+         + ' onclick="_plannerSetView(\'month\')">MONTH</button>';
+    hdr += '<button class="planner-vpill' + (view === 'week'  ? ' active' : '') + '"'
+         + ' style="' + _vSty('week') + '"'
+         + ' onclick="_plannerSetView(\'week\')">WEEK</button>';
+    hdr += '<button class="planner-vpill' + (view === 'day'   ? ' active' : '') + '"'
+         + ' style="' + _vSty('day') + '"'
+         + ' onclick="_plannerSetView(\'day\')">DAY</button>';
+    hdr += '</div>';
 
-  // Center: date label
-  hdr += '<div class="planner-nav-center">' + navLabel + '</div>';
+    // Center: date label
+    hdr += '<div class="planner-nav-center">' + navLabel + '</div>';
 
-  // Right: arrows + Today
-  hdr += '<div class="planner-nav-right">';
-  hdr += '<button class="planner-nav-btn" onclick="_plannerPrev()" title="Previous">‹</button>';
-  hdr += '<button class="planner-nav-btn" onclick="_plannerNext()" title="Next">›</button>';
-  hdr += '<button class="planner-today-btn" onclick="_plannerToday()">TODAY</button>';
-  hdr += '</div>';
+    // Right: arrows + Today
+    hdr += '<div class="planner-nav-right">';
+    hdr += '<button class="planner-nav-btn" onclick="_plannerPrev()" title="Previous">‹</button>';
+    hdr += '<button class="planner-nav-btn" onclick="_plannerNext()" title="Next">›</button>';
+    hdr += '<button class="planner-today-btn" onclick="_plannerToday()">TODAY</button>';
+    hdr += '</div>';
 
-  hdr += '</div>'; // end nav-row
+    hdr += '</div>'; // end nav-row
 
-  // Filter pills row
-  // Open Tasks pill — Day view only, hidden when 0
-  let openTasksPill = '';
-  if (view === 'day') {
-    const _dayOffset2 = STATE.plannerDayOffset || 0;
-    const _dDay2 = new Date(TODAY); _dDay2.setDate(_dDay2.getDate() + _dayOffset2);
-    const _dayDate2 = fmtDate(_dDay2);
-    const _openStatuses2 = ['Backlog','To Do','In Progress','Review'];
-    const _openCount = getTasks().filter(t => {
-      const st = parseStatus(t.status).state;
-      if (st === 'Completed') return false;
-      if (t.dueDate === _dayDate2) return false;
-      if (t.startDate === _dayDate2 && t.dueDate !== _dayDate2) return false;
-      const isOverdue2 = t.dueDate && daysUntil(t.dueDate) < 0;
-      return _openStatuses2.includes(st) || isOverdue2;
-    }).length;
-    if (_openCount > 0) {
-      const _isOpen = STATE.plannerActiveTasksOpen;
-      const _oc = 'STATE.plannerActiveTasksOpen=!STATE.plannerActiveTasksOpen;renderPlanner()';
-      const _actSty = _isOpen
-        ? 'border-color:#38BDF8;color:#38BDF8;background:rgba(56,189,248,0.12);'
-        : '';
-      openTasksPill = '<button class="planner-fpill" style="' + _actSty + '" onclick="' + _oc + '">'
-        + '<span class="planner-fpill-num" style="color:' + (_isOpen?'#38BDF8':'var(--text2)') + '">' + _openCount + '</span>'
-        + ' OPEN TASKS</button>';
+    // Filter pills row
+    // Open Tasks pill — Day view only, hidden when 0
+    let openTasksPill = '';
+    if (view === 'day') {
+      const _dayOffset2 = STATE.plannerDayOffset || 0;
+      const _dDay2 = new Date(TODAY); _dDay2.setDate(_dDay2.getDate() + _dayOffset2);
+      const _dayDate2 = fmtDate(_dDay2);
+      const _openStatuses2 = ['Backlog','To Do','In Progress','Review'];
+      const _openCount = getTasks().filter(t => {
+        const st = parseStatus(t.status).state;
+        if (st === 'Completed') return false;
+        if (t.dueDate === _dayDate2) return false;
+        if (t.startDate === _dayDate2 && t.dueDate !== _dayDate2) return false;
+        const isOverdue2 = t.dueDate && daysUntil(t.dueDate) < 0;
+        return _openStatuses2.includes(st) || isOverdue2;
+      }).length;
+      if (_openCount > 0) {
+        const _isOpen = STATE.plannerActiveTasksOpen;
+        const _oc = 'STATE.plannerActiveTasksOpen=!STATE.plannerActiveTasksOpen;renderPlanner()';
+        const _actSty = _isOpen
+          ? 'border-color:#38BDF8;color:#38BDF8;background:rgba(56,189,248,0.12);'
+          : '';
+        openTasksPill = '<button class="planner-fpill" style="' + _actSty + '" onclick="' + _oc + '">'
+          + '<span class="planner-fpill-num" style="color:' + (_isOpen?'#38BDF8':'var(--text2)') + '">' + _openCount + '</span>'
+          + ' OPEN TASKS</button>';
+      }
     }
-  }
-  hdr += '<div class="planner-filter-row">';
-  hdr += mkFP('tasks',   'Tasks',   cntT);
-  hdr += mkFP('events',  'Events',  cntEv);
-  hdr += mkFP('entries', 'Entries', cntEn);
-  hdr += openTasksPill;
-  hdr += '</div>';
+    hdr += '<div class="planner-filter-row">';
+    hdr += mkFP('tasks',   'Tasks',   cntT);
+    hdr += mkFP('events',  'Events',  cntEv);
+    hdr += mkFP('entries', 'Entries', cntEn);
+    hdr += openTasksPill;
+    hdr += '</div>';
 
-  hdr += '</div>'; // end planner-hero
+    hdr += '</div>'; // end planner-hero
+
+    return hdr;
+  };
+  const hdr = buildPlannerHeader();
 
   // ── MONTH VIEW ────────────────────────────────────────────────────
   if (view === 'month') {
@@ -6358,6 +6072,9 @@ window._kbSetContext = (val) => { STATE.kanbanFilter.context = STATE.kanbanFilte
     let dayColsHTML = '';
     let hasAnyItems = false;
 
+    // Sort: due tasks, start tasks, events by time, entries by time
+    const sortByTime = arr => arr.slice().sort((a,b) => (a.time||'').localeCompare(b.time||''));
+
     for (let i = 0; i < 7; i++) {
       const d       = new Date(ws); d.setDate(ws.getDate() + i);
       const dayDate = fmtDate(d);
@@ -6380,8 +6097,6 @@ window._kbSetContext = (val) => { STATE.kanbanFilter.context = STATE.kanbanFilte
 
       if (dueT.length || startT.length || evts.length || ents.length) hasAnyItems = true;
 
-      // Sort: due tasks, start tasks, events by time, entries by time
-      const sortByTime = arr => arr.slice().sort((a,b) => (a.time||'').localeCompare(b.time||''));
       // Sort: due tasks by priority, start tasks by priority,
       // then events + entries merged and sorted by time
       const timedEvtsEnts = sortByTime([...evts, ...ents]);
@@ -6467,47 +6182,50 @@ window._kbSetContext = (val) => { STATE.kanbanFilter.context = STATE.kanbanFilte
       ents   = getEntries().filter(e => e.date === dayDate);
     }
 
+    // ── Shared day-card builder (unscheduled + open-tasks sections) ──
+    const buildPlannerDayCard = (t, dayDate) => {
+      // ── Priority border color ──────────────────────────────────
+      const bc = ppClass(t.priority).replace('pp-','');
+      const cm = {crit:'#F87171', high:'#FB923C', med:'#0891B2', low:'var(--border2)'};
+      const lc = cm[bc] || 'var(--border2)';
+
+      // ── Priority badge (reuses PRIORITY object) ────────────────
+      const priBadge = _buildPriorityBadge(t);
+      const stBadge = _buildStatusBadge(t);
+
+      // ── Subtask chip ───────────────────────────────────────────
+      const stChip = _subtaskChip(t);
+
+      // ── Due chip + date ─────────────────────────────────────────
+      const dueChipHTML = _buildCounterChip(t.dueDate, dayDate);
+      const ctxChipHTML  = _buildContextChips(t, dayDate);
+      const dateLabel = t.dueDate
+        ? '<span class="planner-day-card-date">' + t.dueDate + '</span>'
+        : '';
+
+      // ── Build card ─────────────────────────────────────────────
+      return '<div class="planner-day-card" style="border-left-color:' + lc + '"'
+        + ' onclick="_plannerOpenItem(\''+t.id+'\');">'
+        // Line 1: priority + status left, subtask chip right
+        + '<div class="planner-day-card-row1">'
+        + priBadge + stBadge
+        + '<span style="margin-left:auto">' + ctxChipHTML + stChip + '</span>'
+        + '</div>'
+        // Line 2: title left, due chip + date right
+        + '<div class="planner-day-card-row2">'
+        + '<span class="planner-day-card-title">' + (t.title||'') + '</span>'
+        + '<div class="planner-day-card-due">' + dueChipHTML + dateLabel + '</div>'
+        + '</div>'
+        + '</div>';
+    };
+
     // ── Unscheduled tasks at top ──────────────────────────────────
     const unscheduled = pf.tasks ? sortByPriority([...dueT, ...startT]) : [];
     let unschHTML = '';
     if (unscheduled.length > 0) {
       unschHTML += '<div class="planner-day-cards">';
       unscheduled.forEach(t => {
-        // ── Priority border color ──────────────────────────────────
-        const bc = ppClass(t.priority).replace('pp-','');
-        const cm = {crit:'#F87171', high:'#FB923C', med:'#0891B2', low:'var(--border2)'};
-        const lc = cm[bc] || 'var(--border2)';
-
-        // ── Priority badge (reuses PRIORITY object) ────────────────
-        const pri = getPri(t.priority);
-        const priBadge = _buildPriorityBadge(t);
-        const stBadge = _buildStatusBadge(t);
-
-        // ── Subtask chip ───────────────────────────────────────────
-        const stChip = _subtaskChip(t);
-
-        // ── Due chip + days counter + date ─────────────────────────
-        const days = daysUntil(t.dueDate);
-        const dueChipHTML = _buildCounterChip(t.dueDate, dayDate);
-        const ctxChipHTML  = _buildContextChips(t, dayDate);
-        const dateLabel = t.dueDate
-          ? '<span class="planner-day-card-date">' + t.dueDate + '</span>'
-          : '';
-
-        // ── Build card ─────────────────────────────────────────────
-        unschHTML += '<div class="planner-day-card" style="border-left-color:' + lc + '"'
-          + ' onclick="_plannerOpenItem(\''+t.id+'\');">'
-          // Line 1: priority + status left, subtask chip right
-          + '<div class="planner-day-card-row1">'
-          + priBadge + stBadge
-          + '<span style="margin-left:auto">' + ctxChipHTML + stChip + '</span>'
-          + '</div>'
-          // Line 2: title left, due chip + date right
-          + '<div class="planner-day-card-row2">'
-          + '<span class="planner-day-card-title">' + (t.title||'') + '</span>'
-          + '<div class="planner-day-card-due">' + dueChipHTML + dateLabel + '</div>'
-          + '</div>'
-          + '</div>';
+        unschHTML += buildPlannerDayCard(t, dayDate);
       });
       unschHTML += '</div>';
     }
@@ -6615,21 +6333,7 @@ window._kbSetContext = (val) => { STATE.kanbanFilter.context = STATE.kanbanFilte
         if (_isOpen) {
           openTasksHTML += '<div class="planner-open-cards">';
           _openTasks.forEach(t => {
-            const bc = ppClass(t.priority).replace('pp-','');
-            const cm = {crit:'#F87171',high:'#FB923C',med:'#0891B2',low:'var(--border2)'};
-            const lc = cm[bc]||'var(--border2)';
-            const pri2 = getPri(t.priority);
-            const priBadge2 = _buildPriorityBadge(t);
-            const stBadge2 = _buildStatusBadge(t);
-            const stChip2 = _subtaskChip(t);
-            const days2 = daysUntil(t.dueDate);
-            const dueHTML2 = _buildCounterChip(t.dueDate, dayDate);
-            const ctxHTML2 = _buildContextChips(t, dayDate);
-            const dateLabel2 = t.dueDate?'<span class="planner-day-card-date">'+t.dueDate+'</span>':'';
-            openTasksHTML += '<div class="planner-day-card" style="border-left-color:'+lc+'" onclick="_plannerOpenItem(\''+t.id+'\');">'
-              +'<div class="planner-day-card-row1">'+priBadge2+stBadge2+'<span style="margin-left:auto">'+ctxHTML2+stChip2+'</span></div>'
-              +'<div class="planner-day-card-row2"><span class="planner-day-card-title">'+(t.title||'')+'</span>'
-              +'<div class="planner-day-card-due">'+dueHTML2+dateLabel2+'</div></div></div>';
+            openTasksHTML += buildPlannerDayCard(t, dayDate);
           });
           openTasksHTML += '</div>';
         }
@@ -6729,7 +6433,7 @@ function openDayList(dateStr, archiveMode) {
         <div style="font-size:17px;font-weight:700">${label}</div>
         ${isToday ? '<div style="font-size:11px;color:var(--accent2);font-weight:600;margin-top:2px">Today</div>' : ''}
       </div>
-      <button class="modal-close" onclick="clearNav()">✕</button>
+      ${_modalCloseBtn()}
     </div>
     ${sorted.length > 0 ? `<div style="font-size:11px;color:var(--muted);margin-bottom:12px">${sorted.length} item${sorted.length>1?'s':''} — tap to view details</div>` : ''}
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">${listHTML}</div>
@@ -6852,32 +6556,45 @@ function renderReminders() {
   if (STATE._remindersDoneExpanded === undefined) STATE._remindersDoneExpanded = false;
 
   // ── Build card ───────────────────────────────────────────────
-  const buildCard = s => {
-    const c          = getStickyColor(s.colorIdx);
-    const isFloating = !!s.float && !isSmallScreen;
-    const isPinned   = !!s.pinned;
-    const isDone     = !!s.done;
-
+  const buildReminderMeta = s => {
     // Parse date — handle ISO format from sheet
     const _rawDate   = s.date || '';
     const _cleanDate = _rawDate.includes('T') ? _rawDate.split('T')[0] : _rawDate;
 
     // Meta text
     let metaText = '';
-    if (isDone && s.doneAt) {
+    if (s.done && s.doneAt) {
       const _raw = s.doneAt.includes('T') ? s.doneAt.replace('T',' ').split('.')[0] : s.doneAt;
       const _dp  = _raw.split(' ');
       metaText = 'Done ' + [_dp[0], _dp[1] ? fmtTime(_dp[1]) : ''].filter(Boolean).join(' ');
-    } else if (isDone) {
+    } else if (s.done) {
       metaText = 'Completed';
     } else if (_cleanDate) {
       metaText = _cleanDate + (s.time ? ' · ' + fmtTime(s.time) : '');
     }
+    return metaText;
+  };
 
+  const buildReminderTags = s => {
     // Tag chips
-    const tagsHTML = (s.tags||[]).length
+    return (s.tags||[]).length
       ? `<div style="display:flex;flex-wrap:wrap;gap:4px">${(s.tags||[]).map(t => _buildTagChip(t)).join('')}</div>`
       : '';
+  };
+
+  const buildColorSwatches = s => {
+    return STICKY_COLORS.map((col,i) => `<button onclick="changeStickyColor('${s.id}',${i})"
+            style="width:14px;height:14px;border-radius:50%;background:${col.bg};border:${s.colorIdx===i?'2px solid rgba(255,255,255,0.85)':'1px solid rgba(0,0,0,0.2)'};cursor:pointer;outline:none;flex-shrink:0"></button>`).join('');
+  };
+
+  const buildCard = s => {
+    const c          = getStickyColor(s.colorIdx);
+    const isFloating = !!s.float && !isSmallScreen;
+    const isPinned   = !!s.pinned;
+    const isDone     = !!s.done;
+
+    const metaText = buildReminderMeta(s);
+    const tagsHTML = buildReminderTags(s);
 
     // Pin/Float active state colors from config (light/dark aware)
     const _pac       = getNoteActionColor('pin');
@@ -6903,8 +6620,7 @@ function renderReminders() {
 
       <div class="reminder-card-footer" style="margin-top:auto">
         <div style="display:flex;gap:4px;align-items:center">
-          ${STICKY_COLORS.map((col,i) => `<button onclick="changeStickyColor('${s.id}',${i})"
-            style="width:14px;height:14px;border-radius:50%;background:${col.bg};border:${s.colorIdx===i?'2px solid rgba(255,255,255,0.85)':'1px solid rgba(0,0,0,0.2)'};cursor:pointer;outline:none;flex-shrink:0"></button>`).join('')}
+          ${buildColorSwatches(s)}
         </div>
         <div style="display:flex;align-items:center;gap:2px">
           ${!isDone ? `
@@ -6935,6 +6651,9 @@ function renderReminders() {
     </div>`;
   };
 
+  // ── Hoisted "done" grid markup (used in both done-section branches) ──
+  const doneGridHTML = `<div class="reminders-grid" style="margin-top:8px">${doneF.map(buildCard).join('')}</div>`;
+
   // ── Hero subtitle ────────────────────────────────────────────
   const ctxSubtitle = f.context === 'pinned' ? 'Pinned'
     : f.context === 'open' ? 'Open Notes'
@@ -6942,7 +6661,7 @@ function renderReminders() {
     : 'All Notes';
 
   // ── Render ───────────────────────────────────────────────────
-  const _wasSearchFocused = document.activeElement?.id === 'rm-search-input';
+  const _wasSearchFocused = _captureSearchFocus('rm-search-input');
 
   el.innerHTML = `
     <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:12px;flex-shrink:0">
@@ -7001,7 +6720,7 @@ function renderReminders() {
       ${doneF.length > 0 ? `
         <div class="reminders-divider"></div>
         ${f.context === 'done' ? `
-          <div class="reminders-grid" style="margin-top:8px">${doneF.map(buildCard).join('')}</div>
+          ${doneGridHTML}
         ` : `
           <div style="display:flex;align-items:center;gap:6px">
             <button class="reminders-done-toggle" style="flex:1" onclick="STATE._remindersDoneExpanded=!STATE._remindersDoneExpanded;renderReminders()">
@@ -7018,7 +6737,7 @@ function renderReminders() {
             </button>
           </div>
           ${STATE._remindersDoneExpanded ? `
-            <div class="reminders-grid" style="margin-top:8px">${doneF.map(buildCard).join('')}</div>
+            ${doneGridHTML}
           ` : ''}
         `}
       ` : ''}
@@ -7026,10 +6745,7 @@ function renderReminders() {
   `;
 
   // Restore search focus
-  if (_wasSearchFocused) {
-    const _si = document.getElementById('rm-search-input');
-    if (_si) { _si.focus(); _si.setSelectionRange(_si.value.length, _si.value.length); }
-  }
+  _restoreSearchFocus('rm-search-input', _wasSearchFocused);
 
   // Apply pinned accent from config
   requestAnimationFrame(() => {
@@ -7112,16 +6828,6 @@ function focusSticky(id) {
   el.style.zIndex = 950;
   el.style.boxShadow = '0 0 0 3px rgba(79,154,181,0.55), 6px 10px 28px rgba(0,0,0,0.5)';
   setTimeout(() => { el.style.boxShadow = ''; el.style.zIndex = ''; }, 2000);
-}
-
-function resetStickyPositions() {
-  STATE.stickies.forEach((s, i) => {
-    s.x = 20 + (i * 210);
-    s.y = 120;
-    saveSticky(s).catch(()=>{});
-  });
-  renderStickyLayer();
-  renderReminders();
 }
 
 function changeStickyColor(id, colorIdx) {
@@ -7270,51 +6976,51 @@ function renderBoard() {
     'Review':'Nothing to review',
     'Completed':'No completed tasks'
   };
-  const colsHTML = KANBAN_COLS.map(col => {
-    const _kbPriOrd = p => p==='Critical'?0:p==='High'?1:p==='Medium'?2:p==='Low'?3:4;
-    const colTasks = visible.filter(t=>parseStatus(t.status).state===col.id)
-      .sort((a,b) => {
-        const pd = _kbPriOrd(a.priority) - _kbPriOrd(b.priority);
-        if (pd !== 0) return pd;
-        if (a.dueDate && b.dueDate) return a.dueDate.localeCompare(b.dueDate);
-        if (a.dueDate) return -1;
-        if (b.dueDate) return 1;
-        return 0;
-      });
-    const isCompleted = col.id === 'Completed';
-    // Completed column cap — dynamic based on screen height
-    const cardsHTML = colTasks.map(t => {
-      // Unified chip/badge system
-      const evBorder      = _buildAccentBorder(t.priority);
-      const priorityBadge = _buildPriorityBadge(t);
-      const statusBadge   = _buildStatusBadge(t);
-      const dueChip       = isCompleted ? '' : _buildCounterChip(t.dueDate);
-      const ctxChips      = _buildContextChips(t);
-      // Tags
-      const allTags   = (t.tags||[]).slice(0,6);
-      const tagsRow1  = allTags.slice(0,3);
-      const tagsRow2  = allTags.slice(3);
-      const mkTag     = tag => _buildTagChip(tag);
-      const tags1HTML = tagsRow1.length ? `<div style="display:flex;gap:3px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;max-width:50%">${tagsRow1.map(mkTag).join('')}</div>` : '';
-      const tags2HTML = tagsRow2.length ? `<div style="display:flex;gap:3px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;max-width:50%">${tagsRow2.map(mkTag).join('')}</div>` : '';
-      // Subtask chip + meta
-      const stChip = _subtaskChip(t);
-      const { state: _ms, doneAt: _da } = parseStatus(t.status);
-      let metaRight = '';
-      if (_ms==='Completed'||_ms==='Done') {
-        if (_da) {
-          const _dp = _da.split(' ');
-          const _doneDate = _dp[0] || '';
-          const _doneTime = _dp[1] ? fmtTime(_dp[1]) : '';
-          metaRight = 'Done ' + [_doneDate, _doneTime].filter(Boolean).join(' ');
-        } else {
-          metaRight = 'Completed';
-        }
-      } else if (t.dueDate) {
-        metaRight = t.dueDate;
+
+  const _kbPriOrd = p => p==='Critical'?0:p==='High'?1:p==='Medium'?2:p==='Low'?3:4;
+
+  const buildCardTags = (t) => {
+    // Tags
+    const allTags   = (t.tags||[]).slice(0,6);
+    const tagsRow1  = allTags.slice(0,3);
+    const tagsRow2  = allTags.slice(3);
+    const mkTag     = tag => _buildTagChip(tag);
+    const tags1HTML = tagsRow1.length ? `<div style="display:flex;gap:3px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;max-width:50%">${tagsRow1.map(mkTag).join('')}</div>` : '';
+    const tags2HTML = tagsRow2.length ? `<div style="display:flex;gap:3px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;max-width:50%">${tagsRow2.map(mkTag).join('')}</div>` : '';
+    return { tagsRow2, tags1HTML, tags2HTML };
+  };
+
+  const buildCardMetaRight = (t) => {
+    const { state: _ms, doneAt: _da } = parseStatus(t.status);
+    let metaRight = '';
+    if (_ms==='Completed'||_ms==='Done') {
+      if (_da) {
+        const _dp = _da.split(' ');
+        const _doneDate = _dp[0] || '';
+        const _doneTime = _dp[1] ? fmtTime(_dp[1]) : '';
+        metaRight = 'Done ' + [_doneDate, _doneTime].filter(Boolean).join(' ');
+      } else {
+        metaRight = 'Completed';
       }
-      const titleStyle = isCompleted ? 'text-decoration:line-through;opacity:0.6;' : '';
-      return `<div class="gt-card" style="${evBorder}" draggable="true" ondragstart="dragStart('${t.id}')" ondragend="dragEnd()" onclick="openTEEDetail('${t.id}')" title="Click to view/edit">
+    } else if (t.dueDate) {
+      metaRight = t.dueDate;
+    }
+    return metaRight;
+  };
+
+  const buildBoardCard = (t, isCompleted) => {
+    // Unified chip/badge system
+    const evBorder      = _buildAccentBorder(t.priority);
+    const priorityBadge = _buildPriorityBadge(t);
+    const statusBadge   = _buildStatusBadge(t);
+    const dueChip       = isCompleted ? '' : _buildCounterChip(t.dueDate);
+    const ctxChips      = _buildContextChips(t);
+    const { tagsRow2, tags1HTML, tags2HTML } = buildCardTags(t);
+    // Subtask chip + meta
+    const stChip = _subtaskChip(t);
+    const metaRight = buildCardMetaRight(t);
+    const titleStyle = isCompleted ? 'text-decoration:line-through;opacity:0.6;' : '';
+    return `<div class="gt-card" style="${evBorder}" draggable="true" ondragstart="dragStart('${t.id}')" ondragend="dragEnd()" onclick="openTEEDetail('${t.id}')" title="Click to view/edit">
         <div class="gt-card-row1">
           ${priorityBadge}${statusBadge}
           <span style="display:flex;align-items:center;gap:4px;margin-left:auto">${ctxChips}${stChip}</span>
@@ -7333,7 +7039,21 @@ function renderBoard() {
         </div>
         ${isCompleted ? `<button class="archive-card-btn" onclick="event.stopPropagation();archiveItem('${t.id}')">Archive</button>` : ''}
       </div>`;
-    }).join('');
+  };
+
+  const colsHTML = KANBAN_COLS.map(col => {
+    const colTasks = visible.filter(t=>parseStatus(t.status).state===col.id)
+      .sort((a,b) => {
+        const pd = _kbPriOrd(a.priority) - _kbPriOrd(b.priority);
+        if (pd !== 0) return pd;
+        if (a.dueDate && b.dueDate) return a.dueDate.localeCompare(b.dueDate);
+        if (a.dueDate) return -1;
+        if (b.dueDate) return 1;
+        return 0;
+      });
+    const isCompleted = col.id === 'Completed';
+    // Completed column cap — dynamic based on screen height
+    const cardsHTML = colTasks.map(t => buildBoardCard(t, isCompleted)).join('');
 
     return `<div class="kanban-col" ondragover="dragOver(event,'${col.id}')" ondrop="drop(event,'${col.id}')">
       <div class="kanban-col-header" style="border-top:2px solid ${getColColor(col)}">
@@ -7362,7 +7082,7 @@ function renderBoard() {
     (f.priority === 'All' || t.priority === f.priority)
   );
   const assigneeNames = new Set();
-  _baseForAssignee.forEach(t => (t.assignees||'').split('|').map(s=>s.trim()).filter(Boolean).forEach(n=>assigneeNames.add(n)));
+  _baseForAssignee.forEach(t => splitAssigneeNames(t.assignees).forEach(n=>assigneeNames.add(n)));
   const assigneeCounts = {};
   assigneeNames.forEach(n => {
     assigneeCounts[n] = _baseForAssignee.filter(t => (t.assignees||'').split('|').map(s=>s.trim()).includes(n)).length;
@@ -7397,7 +7117,7 @@ function renderBoard() {
   STATE._kbAssigneeFloatHTML = assigneeFloatHTML;
 
   // Capture focus state BEFORE re-render destroys DOM
-  const _wasSearchFocused = document.activeElement?.id === 'kanban-search-input';
+  const _wasSearchFocused = _captureSearchFocus('kanban-search-input');
 
   document.getElementById('boardSection').innerHTML = `
     <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:12px;flex-shrink:0">
@@ -7439,10 +7159,7 @@ function renderBoard() {
     </div>
   `;
   // Restore focus to search if it was active before re-render
-  if (_wasSearchFocused) {
-    const _si = document.getElementById('kanban-search-input');
-    if (_si) { _si.focus(); _si.setSelectionRange(_si.value.length, _si.value.length); }
-  }
+  _restoreSearchFocus('kanban-search-input', _wasSearchFocused);
   } catch(e) {
     console.error('renderBoard error:', e);
     const _bs = document.getElementById('boardSection');
@@ -7458,7 +7175,7 @@ function openArchiveDrawer() {
   // Load archive cache if not already fetched
   if (!STATE.archiveCache._fetched && STATE.sheetConnected) {
     openModal(`
-      <div class="modal-title">📦 Task Archive <button class="modal-close" onclick="clearNav()">✕</button></div>
+      <div class="modal-title">📦 Task Archive ${_modalCloseBtn()}</div>
       <div style="text-align:center;padding:40px;color:var(--muted)">Loading archive…</div>`);
     // Fetch and re-open once loaded
     const now = new Date();
@@ -7518,16 +7235,7 @@ function _renderArchiveDrawer(search, priority, assignee) {
       }).join('');
 
   openModal(`
-    <div class="modal-title">
-      <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:20px">📦</span>
-        <div>
-          <div style="font-size:18px;font-weight:700">Task Archive</div>
-          <div style="font-size:12px;color:var(--muted)">${allArchived.length} archived task${allArchived.length!==1?'s':''} · ${filtered.length} shown</div>
-        </div>
-      </div>
-      <button class="modal-close" onclick="clearNav()">✕</button>
-    </div>
+    ${buildModalListHeader('📦', 'Task Archive', `${allArchived.length} archived task${allArchived.length!==1?'s':''} · ${filtered.length} shown`)}
 
     <div class="archive-filter-bar">
       <input id="arch-search" placeholder="Search…" value="${search}"
@@ -7605,6 +7313,81 @@ function renderDirectories() {
   const addCard = (type, label) =>
     '<div class="dir-add-btn" onclick="openDirModal(\'' + type + '\',null)"><i class="ti ti-plus" style="font-size:20px"></i><span>Add ' + label + '</span></div>';
 
+  // ── Tag chip row / action button group helpers ─────────────────
+  const tagChipRow = (tags, marginBottom) => {
+    const _raw = (tags||[]).map(t => _buildTagChip(t)).join('');
+    return _raw ? '<div style="display:flex;flex-wrap:wrap;gap:4px' + (marginBottom ? ';margin-bottom:4px' : '') + '">' + _raw + '</div>' : '';
+  };
+  const actionButtons = (type, id, marginLeftAuto) =>
+    '<div style="display:flex;gap:2px' + (marginLeftAuto ? ';margin-left:auto' : '') + '">' + editBtn(type,id) + delBtn(type,id) + '</div>';
+
+  // ── Card builders ────────────────────────────────────────────
+  const buildFolderCard = f => {
+    const _fTags = tagChipRow(f.tags, true);
+    const _fOpen = f.url ? '<a class="dir-card-action-link" href="' + f.url + '" target="_blank" rel="noopener"><i class="ti ti-external-link" style="font-size:12px"></i> Open</a>' : '';
+    return '<div class="dir-card">'
+      + '<div class="dir-card-header" style="align-items:center">'
+      + '<div class="dir-icon" style="background:rgba(40,92,112,0.18);color:var(--accent2)"><i class="ti ti-folder" style="font-size:20px"></i></div>'
+      + '<div class="dir-card-title" style="flex:1;min-width:0">' + f.name + '</div>'
+      + '</div>'
+      + (f.desc ? '<div class="dir-card-sub" style="font-size:12px;line-height:1.4">' + f.desc + '</div>' : '')
+      + _fTags
+      + '<div class="dir-card-footer" style="align-items:center">'
+      + '<div>' + _fOpen + '</div>'
+      + actionButtons('folder', f.id, true)
+      + '</div></div>';
+  };
+
+  const buildContactCard = c => {
+    const _av    = avColor(c.name);
+    const _avBg  = _av + '22';
+    const _init  = initials(c.name);
+    // Phone + email — closer gap, no icon on company
+    const _phone = c.phone ? '<a class="dir-card-action-link" href="tel:' + c.phone.split(' ').join('') + '" style="font-size:12px;margin-bottom:2px"><i class="ti ti-phone" style="font-size:12px"></i>' + c.phone + '</a>' : '';
+    const _email = c.email ? '<a class="dir-card-action-link" href="mailto:' + c.email + '" style="font-size:12px"><i class="ti ti-mail" style="font-size:12px"></i>' + c.email + '</a>' : '';
+    const _ctags = tagChipRow(c.tags, false);
+    const _cnotes = c.notes ? '<div class="dir-card-body" style="font-size:11px;opacity:0.8;line-height:1.4">' + c.notes + '</div>' : '';
+    const _contacts = (_phone || _email)
+      ? '<div style="display:flex;flex-direction:column;gap:3px;margin-bottom:4px">' + _phone + _email + '</div>'
+      : '';
+    return '<div class="dir-card">'
+      + '<div class="dir-card-header" style="align-items:flex-start;gap:12px;margin-bottom:6px">'
+      + '<div class="dir-icon-lg" style="background:' + _avBg + ';color:' + _av + ';border:1px solid ' + _av + '44">' + _init + '</div>'
+      + '<div style="flex:1;min-width:0;padding-top:2px">'
+      + '<div class="dir-card-title" style="margin-bottom:1px">' + c.name + '</div>'
+      + (c.position ? '<div class="dir-card-sub">' + c.position + '</div>' : '')
+      + (c.company  ? '<div class="dir-card-sub" style="font-size:10px;opacity:0.75">' + c.company + '</div>' : '')
+      + '</div></div>'
+      + _contacts
+      + _cnotes
+      + _ctags
+      + '<div class="dir-card-footer" style="justify-content:flex-end">'
+      + actionButtons('contact', c.id, false)
+      + '</div></div>';
+  };
+
+  const buildLocationCard = l => {
+    const _lTags   = tagChipRow(l.tags, false);
+    const _lMapUrl = l.mapUrl  ? '<a class="dir-card-action-link" href="' + l.mapUrl + '" target="_blank" rel="noopener" style="font-size:12px"><i class="ti ti-map" style="font-size:13px"></i> View on Map</a>' : '';
+    const _lPhone  = l.phone   ? '<div class="dir-card-body" style="font-size:12px"><i class="ti ti-phone" style="font-size:11px;margin-right:4px;opacity:0.7"></i>' + l.phone + '</div>' : '';
+    const _lNotes  = l.notes   ? '<div class="dir-card-body" style="font-size:11px;opacity:0.8;line-height:1.4">' + l.notes + '</div>' : '';
+    return '<div class="dir-card">'
+      + '<div class="dir-card-header" style="align-items:flex-start;gap:12px;margin-bottom:6px">'
+      + '<div class="dir-icon" style="background:rgba(251,191,36,0.15);color:#FBBF24"><i class="ti ti-map-pin" style="font-size:20px"></i></div>'
+      + '<div style="flex:1;min-width:0;padding-top:2px">'
+      + '<div class="dir-card-title" style="margin-bottom:1px">' + l.name + '</div>'
+      + (l.company ? '<div class="dir-card-sub" style="font-size:10px;opacity:0.75">' + l.company + '</div>' : '')
+      + '</div></div>'
+      + (l.address ? '<div class="dir-card-body" style="font-size:12px;margin-bottom:2px"><i class="ti ti-map-pin" style="font-size:11px;margin-right:4px;opacity:0.7"></i>' + l.address + '</div>' : '')
+      + _lPhone
+      + _lNotes
+      + _lTags
+      + '<div class="dir-card-footer" style="align-items:center">'
+      + '<div>' + _lMapUrl + '</div>'
+      + actionButtons('location', l.id, true)
+      + '</div></div>';
+  };
+
   // ── Build cards ───────────────────────────────────────────────
   let cardsHTML = '';
 
@@ -7617,22 +7400,7 @@ function renderDirectories() {
     } else if (filtered.length === 0) {
       cardsHTML = searchEmpty('folders');
     } else {
-      cardsHTML = filtered.map(f => {
-        const _fTagsRaw = (f.tags||[]).map(t => _buildTagChip(t)).join('');
-        const _fTags    = _fTagsRaw ? '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px">' + _fTagsRaw + '</div>' : '';
-        const _fOpen    = f.url ? '<a class="dir-card-action-link" href="' + f.url + '" target="_blank" rel="noopener"><i class="ti ti-external-link" style="font-size:12px"></i> Open</a>' : '';
-        return '<div class="dir-card">'
-          + '<div class="dir-card-header" style="align-items:center">'
-          + '<div class="dir-icon" style="background:rgba(40,92,112,0.18);color:var(--accent2)"><i class="ti ti-folder" style="font-size:20px"></i></div>'
-          + '<div class="dir-card-title" style="flex:1;min-width:0">' + f.name + '</div>'
-          + '</div>'
-          + (f.desc ? '<div class="dir-card-sub" style="font-size:12px;line-height:1.4">' + f.desc + '</div>' : '')
-          + _fTags
-          + '<div class="dir-card-footer" style="align-items:center">'
-          + '<div>' + _fOpen + '</div>'
-          + '<div style="display:flex;gap:2px;margin-left:auto">' + editBtn('folder',f.id) + delBtn('folder',f.id) + '</div>'
-          + '</div></div>';
-      }).join('') + addCard('folder','Folder/File');
+      cardsHTML = filtered.map(buildFolderCard).join('') + addCard('folder','Folder/File');
     }
 
   } else if (tab === 'contacts') {
@@ -7644,34 +7412,7 @@ function renderDirectories() {
     } else if (filtered.length === 0) {
       cardsHTML = searchEmpty('contacts');
     } else {
-      cardsHTML = filtered.map(c => {
-        const _av    = avColor(c.name);
-        const _avBg  = _av + '22';
-        const _init  = initials(c.name);
-        // Phone + email — closer gap, no icon on company
-        const _phone = c.phone ? '<a class="dir-card-action-link" href="tel:' + c.phone.split(' ').join('') + '" style="font-size:12px;margin-bottom:2px"><i class="ti ti-phone" style="font-size:12px"></i>' + c.phone + '</a>' : '';
-        const _email = c.email ? '<a class="dir-card-action-link" href="mailto:' + c.email + '" style="font-size:12px"><i class="ti ti-mail" style="font-size:12px"></i>' + c.email + '</a>' : '';
-        const _cTags = (c.tags||[]).map(t => _buildTagChip(t)).join('');
-        const _ctags = _cTags ? '<div style="display:flex;flex-wrap:wrap;gap:4px">' + _cTags + '</div>' : '';
-        const _cnotes = c.notes ? '<div class="dir-card-body" style="font-size:11px;opacity:0.8;line-height:1.4">' + c.notes + '</div>' : '';
-        const _contacts = (_phone || _email)
-          ? '<div style="display:flex;flex-direction:column;gap:3px;margin-bottom:4px">' + _phone + _email + '</div>'
-          : '';
-        return '<div class="dir-card">'
-          + '<div class="dir-card-header" style="align-items:flex-start;gap:12px;margin-bottom:6px">'
-          + '<div class="dir-icon-lg" style="background:' + _avBg + ';color:' + _av + ';border:1px solid ' + _av + '44">' + _init + '</div>'
-          + '<div style="flex:1;min-width:0;padding-top:2px">'
-          + '<div class="dir-card-title" style="margin-bottom:1px">' + c.name + '</div>'
-          + (c.position ? '<div class="dir-card-sub">' + c.position + '</div>' : '')
-          + (c.company  ? '<div class="dir-card-sub" style="font-size:10px;opacity:0.75">' + c.company + '</div>' : '')
-          + '</div></div>'
-          + _contacts
-          + _cnotes
-          + _ctags
-          + '<div class="dir-card-footer" style="justify-content:flex-end">'
-          + '<div style="display:flex;gap:2px">' + editBtn('contact',c.id) + delBtn('contact',c.id) + '</div>'
-          + '</div></div>';
-      }).join('') + addCard('contact','Contact');
+      cardsHTML = filtered.map(buildContactCard).join('') + addCard('contact','Contact');
     }
 
   } else {
@@ -7693,28 +7434,7 @@ function renderDirectories() {
       + '</div>';
 
   } else {
-      cardsHTML = filtered.map(l => {
-        const _lTagsRaw = (l.tags||[]).map(t => _buildTagChip(t)).join('');
-        const _lTags    = _lTagsRaw ? '<div style="display:flex;flex-wrap:wrap;gap:4px">' + _lTagsRaw + '</div>' : '';
-        const _lMapUrl  = l.mapUrl  ? '<a class="dir-card-action-link" href="' + l.mapUrl + '" target="_blank" rel="noopener" style="font-size:12px"><i class="ti ti-map" style="font-size:13px"></i> View on Map</a>' : '';
-        const _lPhone   = l.phone   ? '<div class="dir-card-body" style="font-size:12px"><i class="ti ti-phone" style="font-size:11px;margin-right:4px;opacity:0.7"></i>' + l.phone + '</div>' : '';
-        const _lNotes   = l.notes   ? '<div class="dir-card-body" style="font-size:11px;opacity:0.8;line-height:1.4">' + l.notes + '</div>' : '';
-        return '<div class="dir-card">'
-          + '<div class="dir-card-header" style="align-items:flex-start;gap:12px;margin-bottom:6px">'
-          + '<div class="dir-icon" style="background:rgba(251,191,36,0.15);color:#FBBF24"><i class="ti ti-map-pin" style="font-size:20px"></i></div>'
-          + '<div style="flex:1;min-width:0;padding-top:2px">'
-          + '<div class="dir-card-title" style="margin-bottom:1px">' + l.name + '</div>'
-          + (l.company ? '<div class="dir-card-sub" style="font-size:10px;opacity:0.75">' + l.company + '</div>' : '')
-          + '</div></div>'
-          + (l.address ? '<div class="dir-card-body" style="font-size:12px;margin-bottom:2px"><i class="ti ti-map-pin" style="font-size:11px;margin-right:4px;opacity:0.7"></i>' + l.address + '</div>' : '')
-          + _lPhone
-          + _lNotes
-          + _lTags
-          + '<div class="dir-card-footer" style="align-items:center">'
-          + '<div>' + _lMapUrl + '</div>'
-          + '<div style="display:flex;gap:2px;margin-left:auto">' + editBtn('location',l.id) + delBtn('location',l.id) + '</div>'
-          + '</div></div>';
-      }).join('') + addCard('location','Location');
+      cardsHTML = filtered.map(buildLocationCard).join('') + addCard('location','Location');
     }
   }
 
@@ -7758,6 +7478,13 @@ function renderDirectories() {
   const _searchPh  = 'Search ' + groupLabel.toLowerCase() + '…';
 
   // ── Render ────────────────────────────────────────────────────
+  // P1-BUG001: renderDirectories() replaces dirSection.innerHTML on every
+  // keystroke, destroying and recreating #dir-search-input — causing focus
+  // loss after each character. Capture focus state before replacement and
+  // restore after so search typing is continuous.
+  const _prevActive    = document.activeElement;
+  const _searchFocused = _prevActive && _prevActive.id === 'dir-search-input';
+
   document.getElementById('dirSection').innerHTML = ''
     + '<div style="display:flex;align-items:baseline;gap:8px;margin-bottom:16px;flex-shrink:0;flex-wrap:wrap">'
     + '<span style="font-size:26px;font-weight:800;letter-spacing:-0.03em;line-height:1.1;color:var(--text);font-family:var(--font-disp)">Resources</span>'
@@ -7773,6 +7500,22 @@ function renderDirectories() {
     + _sortHTML
     + '</div>'
     + '<div class="dir-grid" style="padding-bottom:40px">' + cardsHTML + '</div>';
+
+  // Restore focus and cursor if search input was active before render.
+  // P1-BUG001 (follow-up): the previous fix captured selectionStart/End from
+  // the old (destroyed) input before replacement. On the first character typed
+  // into an empty field, selectionStart was 0, so setSelectionRange(0,0) placed
+  // the cursor before the new character — causing the second character to prepend
+  // rather than append, making it appear the first character didn't filter.
+  // Fix: always place the cursor at the end of the new input value after restore.
+  if (_searchFocused) {
+    const _newInp = document.getElementById('dir-search-input');
+    if (_newInp) {
+      _newInp.focus();
+      const _len = _newInp.value.length;
+      _newInp.setSelectionRange(_len, _len);
+    }
+  }
 }
 
 function confirmAction(message, confirmLabel, onConfirm, danger=true) {
@@ -7834,6 +7577,84 @@ function _backBtn() {
     ? `<button class="btn-ghost" onclick="popNav()">‹ Back</button>`
     : '';
 }
+
+// ═══════════════════════════════════════════════════════════
+// GLOBAL UI HANDLERS — shared filter/dropdown/tab controls for
+// Board, People, Directories, and Reminders tabs
+// ═══════════════════════════════════════════════════════════
+window._kbSetPriority = (val) => { STATE.kanbanFilter.priority = val; document.querySelectorAll('.kb-float').forEach(el=>el.remove()); renderBoard(); };
+window._kbSetAssignee = (val) => { STATE.kanbanFilter.assignee = val; document.querySelectorAll('.kb-float').forEach(el=>el.remove()); renderBoard(); };
+window._kbOpenFloat = function(btnEl, html) {
+  // Toggle if already open from same button
+  const existing = document.querySelector('.kb-float');
+  if (existing) { existing.remove(); return; }
+  const float = document.createElement('div');
+  float.className = 'kb-float';
+  float.innerHTML = html;
+  document.body.appendChild(float);
+  const rect = btnEl.getBoundingClientRect();
+  float.style.top  = (rect.bottom + 6) + 'px';
+  float.style.left = rect.left + 'px';
+  setTimeout(() => {
+    document.addEventListener('click', function _close(e) {
+      if (!float.contains(e.target) && !btnEl.contains(e.target)) {
+        float.remove();
+        document.removeEventListener('click', _close);
+      }
+    });
+  }, 0);
+}
+window._kbOpenPriFloat = (btnEl) => window._kbOpenFloat(btnEl, STATE._kbPriFloatHTML);
+window._kbOpenAssigneeFloat = (btnEl) => window._kbOpenFloat(btnEl, STATE._kbAssigneeFloatHTML);
+// ── RESOURCES TAG FILTER FUNCTIONS ─────────────────────────────
+// ── PEOPLE FILTER FUNCTIONS ────────────────────────────────────
+window._ppSetContext = (val) => {
+  STATE.peopleFilter.context = val;
+  renderPeople();
+}; // val: 'all'|'today'|'week'|'idle'
+
+window._dirSetSort = (val) => {
+  STATE.dirSort = val;
+  renderDirectories();
+};
+window._dirSwitchTab = (tabId) => {
+  STATE.dirTab = tabId;
+  STATE.dirSearch = '';
+  STATE.dirTags = [];
+  renderDirectories();
+};
+window._dirAddTag = (tag) => {
+  if (!STATE.dirTags.includes(tag)) STATE.dirTags.push(tag);
+  const f = document.querySelector('.kb-float');
+  if (f) f.remove();
+  renderDirectories();
+};
+window._dirRemoveTag = (tag) => {
+  STATE.dirTags = STATE.dirTags.filter(t => t !== tag);
+  renderDirectories();
+};
+window._dirOpenTagFloat = (btnEl) => window._kbOpenFloat(btnEl, STATE._dirTagFloatHTML);
+
+// ── REMINDERS FILTER FUNCTIONS ─────────────────────────────────
+window._rmSetContext = (val) => {
+  STATE.reminderFilter.context = STATE.reminderFilter.context === val ? 'all' : val;
+  renderReminders();
+};
+window._rmOpenDateFloat = (btnEl) => window._kbOpenFloat(btnEl, STATE._rmDateFloatHTML);
+window._rmOpenTagFloat  = (btnEl) => window._kbOpenFloat(btnEl, STATE._rmTagFloatHTML);
+window._rmSetDate = (val) => {
+  STATE.reminderFilter.date = val;
+  const f = document.querySelector('.kb-float');
+  if (f) f.remove();
+  renderReminders();
+};
+window._rmSetTag = (val) => {
+  STATE.reminderFilter.tag = val;
+  const f = document.querySelector('.kb-float');
+  if (f) f.remove();
+  renderReminders();
+};
+window._kbSetContext = (val) => { STATE.kanbanFilter.context = STATE.kanbanFilter.context === val ? 'all' : val; renderBoard(); };
 
 function openModal(html, wide=false) {
   document.getElementById('activeModal')?.remove();
@@ -7919,7 +7740,7 @@ function openTagList(tag) {
         <div style="font-size:16px;font-weight:800">#${tag}</div>
         <div style="font-size:11px;color:var(--muted)">${matches.length} item${matches.length!==1?'s':''} tagged</div>
       </div>
-      <button class="modal-close" onclick="clearNav()">✕</button>
+      ${_modalCloseBtn()}
     </div>
     <div style="max-height:55vh;overflow-y:auto;padding-right:4px">${listHTML}</div>
     <div class="modal-actions" style="margin-top:12px">${_backBtn()}</div>`, true);
@@ -7968,35 +7789,18 @@ function openTEEDetail(itemId, _u1, isArchived) {
 
   // Push self to stack before rendering so ‹ Back from child returns here
   openModal(`
-    <div class="modal-title" style="align-items:flex-start;flex-direction:column;gap:8px">
-      <div style="display:flex;justify-content:space-between;width:100%;align-items:center">
-        <span style="display:flex;align-items:center;gap:8px">
-          ${typeIcon}
-          <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;
-            padding:3px 9px;border-radius:20px;background:${pri.bg};color:${pri.text}">${typeLabel}</span>
-          ${item.priority ? `<button class="status-badge-btn" style="font-size:10px;padding:3px 9px;background:${pri.bg};color:${pri.text};border-color:${pri.bar}44" onclick="openPriorityDropdown('${item.id}',this,event)" title="Change priority">${item.priority}</button>` : ''}
-        </span>
-        <button class="modal-close" onclick="clearNav()">✕</button>
-      </div>
-      <div style="font-size:18px;font-weight:700;color:var(--text);line-height:1.3">${colorSwatch}${item.title}</div>
-      <div style="font-size:11px;color:var(--muted);font-family:var(--mono)">${item.id}</div>
-    </div>
+    ${buildModalDetailHeader(item, typeIcon, typeLabel, pri, colorSwatch)}
 
     <div class="detail-grid">
-      <div class="detail-row"><span class="detail-label">Status</span><span class="detail-value"><button id="detail-status-btn-${item.id}" class="status-badge-btn" style="background:${getStatusColor(getDisplayStatus(item))||'#64748B'}22;color:${getStatusColor(getDisplayStatus(item))||'#64748B'};border-color:${getStatusColor(getDisplayStatus(item))||'#64748B'}44" onclick="openStatusDropdown('${item.id}',this,event)" title="Change status">${getDisplayStatus(item)}</button>${(()=>{const {doneAt}=parseStatus(item.status);return doneAt?`<span style="font-size:10px;color:var(--muted);margin-left:6px">at ${fmtTime(doneAt.split(' ')[1]||doneAt)}</span>`:'';})()}</span></div>
+      ${_buildDetailStatusRow(item)}
       ${row(item.type === 'task' ? 'Due Date' : 'Date', fmtDisplayDate(dateField))}
       ${row('Start Date', fmtDisplayDate(startField))}
       ${row('Time', timeStr)}
       ${row('Category', item.category)}
       ${row('Project', item.project)}
-      ${row('Assignees', (() => { const parts=(item.assignees||'').split('|').map(s=>s.trim()).filter(Boolean); if(!parts.length) return '—'; if(item.type==='task') return parts[0]+(parts.length>1?' (lead), '+parts.slice(1).join(', '):''); return parts.join(', '); })())}
+      ${row('Assignees', formatAssigneesDisplay(item))}
       ${row('Department', item.dept)}
-      ${(()=>{
-        const tagArr = Array.isArray(item.tags)?item.tags:(item.tags||'').split(',').map(t=>t.trim()).filter(Boolean);
-        if(!tagArr.length) return '';
-        const tagBtns = tagArr.map(t=>`<button class="tag-btn" style="${(tc=>'background:'+tc.bg+';color:'+tc.text+';border-color:'+tc.border)(tagColor(t))}" onclick="_navTo(()=>openTEEDetail('${item.id}'),()=>openTagList('${t}'))" title="View all #${t} items"><span style="opacity:0.5">#</span>${t}</button>`).join(' ');
-        return `<div class="detail-row"><span class="detail-label">Tags</span><span class="detail-value" style="display:flex;flex-wrap:wrap;gap:4px">${tagBtns}</span></div>`;
-      })()}
+      ${_buildDetailTagRow(item.tags, `openTEEDetail('${item.id}')`)}
     </div>
 
     ${item.desc  ? `<div style="margin:14px 0 4px;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.6px">Description</div>
@@ -8169,7 +7973,7 @@ function switchTEEType(newType) {
       </div>
       <div class="form-group">
         <label class="form-label">Participants <span style="font-size:10px;color:var(--muted);font-weight:400">optional — tap to select</span></label>
-        ${buildChipSelect('tee-contributors', assignees, (existing?.assignees||'').split('|').map(s=>s.trim()).filter(Boolean))}
+        ${buildChipSelect('tee-contributors', assignees, splitAssigneeNames(existing?.assignees))}
       </div>`;
   } else { // entry
     newFields = `
@@ -8196,7 +8000,7 @@ function switchTEEType(newType) {
       </div>
       <div class="form-group">
         <label class="form-label">Participants <span style="font-size:10px;color:var(--muted);font-weight:400">optional — tap to select</span></label>
-        ${buildChipSelect('tee-contributors', assignees, (existing?.assignees||'').split('|').map(s=>s.trim()).filter(Boolean))}
+        ${buildChipSelect('tee-contributors', assignees, splitAssigneeNames(existing?.assignees))}
       </div>`;
   }
 
@@ -8315,7 +8119,7 @@ function _renderTEEModal(item, type, defaultDate, defaultStatus, carried) {
     </div>
     <div class="form-group">
       <label class="form-label">Participants <span style="font-size:10px;color:var(--muted);font-weight:400">optional — tap to select</span></label>
-      ${buildChipSelect('tee-contributors', assignees, (item?.assignees||'').split('|').map(s=>s.trim()).filter(Boolean))}
+      ${buildChipSelect('tee-contributors', assignees, splitAssigneeNames(item?.assignees))}
     </div>` : '';
 
   // ── ENTRY fields ──
@@ -8343,7 +8147,7 @@ function _renderTEEModal(item, type, defaultDate, defaultStatus, carried) {
     </div>
     <div class="form-group">
       <label class="form-label">Participants <span style="font-size:10px;color:var(--muted);font-weight:400">optional — tap to select</span></label>
-      ${buildChipSelect('tee-contributors', assignees, (item?.assignees||'').split('|').map(s=>s.trim()).filter(Boolean))}
+      ${buildChipSelect('tee-contributors', assignees, splitAssigneeNames(item?.assignees))}
     </div>` : '';
 
   // ── Shared fields (all types) ──
@@ -8449,7 +8253,7 @@ function _renderTEEModal(item, type, defaultDate, defaultStatus, carried) {
           ${isNew ? 'New Item' : `Edit <span style="font-size:11px;color:var(--muted);font-family:var(--mono)">${id}</span>`}
           <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
             ${pinnedToggleBtn}
-            <button class="modal-close" onclick="clearNav()">✕</button>
+            ${_modalCloseBtn()}
           </div>
         </div>
         ${hiddenFields}
@@ -8699,7 +8503,7 @@ function _restoreTEEModal(itemId, type, defaultDate, defaultStatus) {
 function openPersonModal(personId) {
   const p = personId ? STATE.people.find(x=>x.id===personId) : null;
   openModal(`
-    <div class="modal-title">${p?'Edit':'Add'} Team Member <button class="modal-close" onclick="clearNav()">✕</button></div>
+    <div class="modal-title">${p?'Edit':'Add'} Team Member ${_modalCloseBtn()}</div>
     <div class="form-group"><label class="form-label">Full Name *</label><input class="form-input" id="pm-name" value="${p?.name||''}" placeholder="Full name"></div>
     <div class="form-group"><label class="form-label">Role / Title</label><input class="form-input" id="pm-role" value="${p?.role||''}" placeholder="e.g. UI/UX Designer"></div>
     <div class="form-group"><label class="form-label">Color</label><input class="form-input" type="color" id="pm-color" value="${p?.color||'#285C70'}"></div>
@@ -8947,6 +8751,16 @@ window._stickyTagInput = function(textarea) {
   dropdown.style.display = 'block';
 };
 
+function _captureSearchFocus(inputId) {
+  return document.activeElement?.id === inputId;
+}
+
+function _restoreSearchFocus(inputId, wasFocused) {
+  if (!wasFocused) return;
+  const el = document.getElementById(inputId);
+  if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+}
+
 function _escapeHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/ /g,'&nbsp;').replace(/\n/g,'<br>');
 }
@@ -9076,7 +8890,7 @@ function openStickyArchiveDrawer() {
   openModal(`
     <div class="modal-title">
       <i class="ti ti-archive" style="font-size:16px;margin-right:6px"></i>Notes Archive
-      <button class="modal-close" onclick="clearNav()">✕</button>
+      ${_modalCloseBtn()}
     </div>
     <div style="margin-bottom:12px">
       <input id="sticky-archive-search" class="form-input" placeholder="Search archived notes…"
@@ -9099,7 +8913,7 @@ function openStickyArchiveDrawer() {
       id:         r['ID']||'',
       text:       r['Text']||'',
       colorIdx:   Number(r['ColorIdx'])||0,
-      tags:       (r['Tags']||'').split('|').map(t=>t.trim().replace(/^#/,'')).filter(Boolean),
+      tags:       parseTagList(r['Tags']),
       date:       r['Date']||'',
       done:       r['Done']==='TRUE'||r['Done']===true,
       doneAt:     r['DoneAt']||'',
@@ -9331,7 +9145,7 @@ function openDirModal(type, itemId) {
   openModal(`
     <div class="modal-title">
       ${item?'Edit':'Add'} ${type.charAt(0).toUpperCase()+type.slice(1)}
-      <button class="modal-close" onclick="clearNav()">✕</button>
+      ${_modalCloseBtn()}
     </div>
     ${formHTML}
     <div class="modal-actions">
@@ -9398,13 +9212,6 @@ function drop(e, colId) {
    9. NAV & SCROLL
    ============================================================ */
 // ── NAVIGATION + THEME ───────────────────────────────────────
-function navScrollTo(id) {
-  const el = document.getElementById(`sec-${id}`);
-  if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - 70;
-  window.scrollTo({ top, behavior: 'smooth' });
-}
-
 function calNav(dir) {
   STATE.calMonth += dir;
   if (STATE.calMonth > 11) { STATE.calMonth = 0; STATE.calYear++; }
@@ -9509,30 +9316,45 @@ const DATE_COLUMNS = ['Date', 'Due Date', 'Start Date', 'Archived Date'];
 // Columns that contain time values — returned as HH:MM strings
 const TIME_COLUMNS = ['Time', 'End Time'];
 
+// Apps Script / Google Sheets date values are not always reliable with instanceof Date.
+// This checks for Date-like objects by duck-typing instead.
+function isDateLike(value) {
+  return value &&
+    typeof value === 'object' &&
+    typeof value.getFullYear === 'function' &&
+    typeof value.getMonth   === 'function' &&
+    typeof value.getDate    === 'function';
+}
+
 function formatCell(header, value, displayValue) {
-  // For TIME columns: always use the display value (e.g. "11:45")
-  // This bypasses all timezone issues completely
+  // TIME columns: always use the display value (e.g. "11:45").
+  // This bypasses all timezone issues completely.
   if (TIME_COLUMNS.includes(header)) {
     if (displayValue && /^\d{1,2}:\d{2}/.test(displayValue)) {
       return displayValue.substring(0, 5);
     }
-    // Fallback: numeric fraction
+    // Fallback: numeric fraction of a day.
     if (typeof value === 'number') {
       var totalMins = Math.round(value * 24 * 60);
-      var h = Math.floor(totalMins / 60) % 24;
+      var h   = Math.floor(totalMins / 60) % 24;
       var min = totalMins % 60;
       return String(h).padStart(2,'0') + ':' + String(min).padStart(2,'0');
     }
     return '';
   }
-  if (DATE_COLUMNS.includes(header) && value instanceof Date) {
+  // DATE columns: normalize to YYYY-MM-DD using sheet-local date components.
+  if (DATE_COLUMNS.includes(header) && isDateLike(value)) {
     var y = value.getFullYear();
     var m = String(value.getMonth() + 1).padStart(2, '0');
     var d = String(value.getDate()).padStart(2, '0');
     return y + '-' + m + '-' + d;
   }
-  if (value instanceof Date) {
-    return value.toISOString();
+  // P0-BUG002: Non-date columns whose cells were auto-coerced to Date-like
+  // objects by Google Sheets must return the visible display text, not an
+  // ISO string. Using instanceof Date alone was not reliable; isDateLike()
+  // duck-types instead.
+  if (isDateLike(value)) {
+    return displayValue || '';
   }
   return value;
 }
@@ -9545,11 +9367,14 @@ function handleRequest(e, method) {
       if (!sheetName) throw new Error('Missing sheet');
       const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
       if (!sheet) throw new Error('Sheet not found: ' + sheetName);
+
       if (action === 'getAll') {
         const range = sheet.getDataRange();
         const values = range.getValues();
         const displayValues = range.getDisplayValues();
+
         if (values.length < 2) return output({ ok: true, data: [] });
+
         const headers = values[0];
         const data = values.slice(1)
           .map((row, rowIdx) => ({ row, display: displayValues[rowIdx + 1] }))
@@ -9561,8 +9386,10 @@ function handleRequest(e, method) {
             });
             return obj;
           });
+
         return output({ ok: true, data });
       }
+
       throw new Error('Invalid GET action');
     }
 
@@ -9580,11 +9407,13 @@ function handleRequest(e, method) {
         const rows      = sheet.getRange(2, 1, lastRow, 1).getValues().flat();
         const rowIndex  = rows.indexOf(id);
         const rowData   = headers.map(h => item[h] !== undefined ? item[h] : '');
+
         if (rowIndex >= 0) {
           sheet.getRange(rowIndex + 2, 1, 1, rowData.length).setValues([rowData]);
         } else {
           sheet.appendRow(rowData);
         }
+
         return output({ ok: true });
       }
 
@@ -9593,148 +9422,9 @@ function handleRequest(e, method) {
         const lastRow  = Math.max(sheet.getLastRow() - 1, 1);
         const rows     = sheet.getRange(2, 1, lastRow, 1).getValues().flat();
         const rowIndex = rows.indexOf(id);
+
         if (rowIndex >= 0) sheet.deleteRow(rowIndex + 2);
-        return output({ ok: true });
-      }
 
-      throw new Error('Invalid POST action');
-    }
-  } catch (err) {
-    return output({ ok: false, error: err.message });
-  }
-}
-
-function output(obj) {
-  return ContentService
-    .createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-================================================================
--->
-</body>
-</html>
-</script>
-
-<!--
-================================================================
-  GOOGLE APPS SCRIPT (v4 — Unified TEE + all sheets)
-  Paste into: Extensions → Apps Script → Deploy as Web App
-  Execute as: Me | Access: Anyone
-
-  IMPORTANT — Sheet column headers must match EXACTLY:
-
-  📅 Unified TEE Entries → ID, Type, Title, Description, Date, Due Date, Start Date,
-                            Time, End Time, Status, Priority, Category, Project,
-                            Department, Assignees, Progress %, Tags, Notes, Color, Recurrence
-
-  📦 TEE Archive         → same columns as above + Archived Date, Archived By
-
-  📝 Stickies            → ID, Text, ColorIdx, X, Y, Float, Pinned
-
-  📁 Folders             → ID, Name, URL, Description
-  👤 Contacts            → ID, Name, Position, Phone, Email
-  📍 Locations           → ID, Name, Address, MapURL, Notes
-  👥 People              → ID, Name, Role, Color, Photo
-
-  COLUMN RENAME CHECKLIST (if upgrading from earlier version):
-    • "Assigned To" → rename to "Assignees" in both TEE sheets
-    • Add "Photo" column (E) to People sheet if not present
-================================================================
-
-function doGet(e)  { return handleRequest(e, 'GET');  }
-function doPost(e) { return handleRequest(e, 'POST'); }
-
-// Columns that contain date values — returned as YYYY-MM-DD strings
-const DATE_COLUMNS = ['Date', 'Due Date', 'Start Date', 'Archived Date'];
-// Columns that contain time values — returned as HH:MM strings
-const TIME_COLUMNS = ['Time', 'End Time'];
-
-function formatCell(header, value, displayValue) {
-  // For TIME columns: always use the display value (e.g. "11:45")
-  // This bypasses all timezone issues completely
-  if (TIME_COLUMNS.includes(header)) {
-    if (displayValue && /^\d{1,2}:\d{2}/.test(displayValue)) {
-      return displayValue.substring(0, 5);
-    }
-    // Fallback: numeric fraction
-    if (typeof value === 'number') {
-      var totalMins = Math.round(value * 24 * 60);
-      var h = Math.floor(totalMins / 60) % 24;
-      var min = totalMins % 60;
-      return String(h).padStart(2,'0') + ':' + String(min).padStart(2,'0');
-    }
-    return '';
-  }
-  if (DATE_COLUMNS.includes(header) && value instanceof Date) {
-    var y = value.getFullYear();
-    var m = String(value.getMonth() + 1).padStart(2, '0');
-    var d = String(value.getDate()).padStart(2, '0');
-    return y + '-' + m + '-' + d;
-  }
-  if (value instanceof Date) {
-    return value.toISOString();
-  }
-  return value;
-}
-
-function handleRequest(e, method) {
-  try {
-    if (method === 'GET') {
-      const action    = e.parameter.action;
-      const sheetName = e.parameter.sheet;
-      if (!sheetName) throw new Error('Missing sheet');
-      const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
-      if (!sheet) throw new Error('Sheet not found: ' + sheetName);
-      if (action === 'getAll') {
-        const range = sheet.getDataRange();
-        const values = range.getValues();
-        const displayValues = range.getDisplayValues();
-        if (values.length < 2) return output({ ok: true, data: [] });
-        const headers = values[0];
-        const data = values.slice(1)
-          .map((row, rowIdx) => ({ row, display: displayValues[rowIdx + 1] }))
-          .filter(({ row }) => row.some(cell => cell !== ''))
-          .map(({ row, display }) => {
-            const obj = {};
-            headers.forEach((h, i) => {
-              obj[h] = formatCell(h, row[i], display[i]);
-            });
-            return obj;
-          });
-        return output({ ok: true, data });
-      }
-      throw new Error('Invalid GET action');
-    }
-
-    if (method === 'POST') {
-      const body  = JSON.parse(e.postData.contents);
-      const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(body.sheet);
-      if (!sheet) throw new Error('Sheet not found: ' + body.sheet);
-
-      if (body.action === 'upsert') {
-        const headers   = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-        const idField   = headers[0];
-        const item      = body.data;
-        const id        = item[idField];
-        const lastRow   = Math.max(sheet.getLastRow() - 1, 1);
-        const rows      = sheet.getRange(2, 1, lastRow, 1).getValues().flat();
-        const rowIndex  = rows.indexOf(id);
-        const rowData   = headers.map(h => item[h] !== undefined ? item[h] : '');
-        if (rowIndex >= 0) {
-          sheet.getRange(rowIndex + 2, 1, 1, rowData.length).setValues([rowData]);
-        } else {
-          sheet.appendRow(rowData);
-        }
-        return output({ ok: true });
-      }
-
-      if (body.action === 'delete') {
-        const id       = body.id;
-        const lastRow  = Math.max(sheet.getLastRow() - 1, 1);
-        const rows     = sheet.getRange(2, 1, lastRow, 1).getValues().flat();
-        const rowIndex = rows.indexOf(id);
-        if (rowIndex >= 0) sheet.deleteRow(rowIndex + 2);
         return output({ ok: true });
       }
 
