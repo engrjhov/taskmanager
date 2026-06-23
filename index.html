@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Public+Sans:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   DESIGN TOKENS — Dark Mode
+   DESIGN TOKENS — Dark Mode  [LIQUID GLASS REMODEL]
    ============================================================ */
 :root {
   /* ── FONTS ── */
@@ -17,63 +17,123 @@
   --font-disp: 'Plus Jakarta Sans', sans-serif;
   --mono:      'Geist Mono', monospace;
 
-  /* ── CHARCOAL TEAL — Dark Mode ── */
-  --bg:        #1E2023;
-  --bg2:       #252829;
-  --glass:     rgba(44,48,51,0.75);
-  --glass2:    rgba(44,48,51,0.9);
-  --glassh:    rgba(55,60,64,0.95);
-  --glow:      rgba(40,92,112,0.18);
-  --text:      #E8EDEF;
-  --text2:     #8FA3AC;
-  --muted:     #4A5A62;
-  --border:    rgba(40,92,112,0.3);
-  --border2:   rgba(79,154,181,0.35);
-  --bordera:   rgba(79,154,181,0.5);
-  --accent:    #285C70;
-  --accent2:   #4F9AB5;
-  --green:     #34D399;
-  --yellow:    #FBBF24;
-  --red:       #F87171;
-  --orange:    #FB923C;
-  --purple:    #C084FC;
-  --cyan:      #22D3EE;
-  --pink:      #F472B6;
+  /* ── LIQUID GLASS — Dark Mode ── */
+  /* Background: deep space gradient, visible through surfaces */
+  --bg:        #0a0e14;
+  --bg2:       #0d1219;
+
+  /* Glass surfaces: ultra-transparent, heavy blur */
+  --glass:     rgba(255,255,255,0.05);
+  --glass2:    rgba(255,255,255,0.09);
+  --glassh:    rgba(255,255,255,0.13);
+
+  /* Glow & specular */
+  --glow:      rgba(100,180,255,0.12);
+
+  /* Text */
+  --text:      rgba(240,248,255,0.95);
+  --text2:     rgba(180,210,235,0.7);
+  --muted:     rgba(120,160,190,0.45);
+
+  /* Borders: prismatic top-highlight style */
+  --border:    rgba(255,255,255,0.10);
+  --border2:   rgba(120,200,255,0.22);
+  --bordera:   rgba(120,200,255,0.4);
+
+  /* Accent: iridescent cyan-blue */
+  --accent:    #1a6aff;
+  --accent2:   #5db8ff;
+
+  /* Status colors — vivid against dark glass */
+  --green:     #2dffb4;
+  --yellow:    #ffe066;
+  --red:       #ff6b8a;
+  --orange:    #ff9a5c;
+  --purple:    #c77dff;
+  --cyan:      #38e8ff;
+  --pink:      #ff6fd8;
+
+  /* Layout */
   --nav-h:     62px;
-  --radius:    16px;
-  --radius-sm: 10px;
-  --blur:      blur(20px);
-  --blur-sm:   blur(12px);
-  --shadow:    0 8px 32px rgba(0,0,0,0.5);
-  --shadow-sm: 0 4px 16px rgba(0,0,0,0.3);
-  --glow-card: 0 0 0 1px rgba(79,154,181,0.2), 0 8px 24px rgba(40,92,112,0.15);
+  --radius:    20px;
+  --radius-sm: 12px;
+
+  /* Blur — liquid glass needs heavy blur */
+  --blur:      blur(40px) saturate(1.8);
+  --blur-sm:   blur(24px) saturate(1.6);
+
+  /* Shadows: deep & diffuse, no hard neumorphic edges */
+  --shadow:    0 8px 48px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4);
+  --shadow-sm: 0 4px 24px rgba(0,0,0,0.5);
+
+  /* Glow card: specular ring + colored bloom */
+  --glow-card: 0 0 0 1px rgba(120,200,255,0.18),
+               0 8px 32px rgba(26,106,255,0.18),
+               0 2px 8px rgba(0,0,0,0.4);
+
+  /* Liquid glass specular: top-edge light refraction */
+  --glass-specular: inset 0 1px 0 rgba(255,255,255,0.18),
+                    inset 0 -1px 0 rgba(0,0,0,0.15),
+                    inset 1px 0 0 rgba(255,255,255,0.06),
+                    inset -1px 0 0 rgba(255,255,255,0.06);
+
+  /* Chromatic shimmer for card tops */
+  --chromatic-border: linear-gradient(135deg,
+    rgba(120,200,255,0.35) 0%,
+    rgba(180,120,255,0.2) 35%,
+    rgba(80,220,200,0.2) 65%,
+    rgba(120,200,255,0.35) 100%);
 }
 /* ============================================================
-   DESIGN TOKENS — Light Mode
+   DESIGN TOKENS — Light Mode  [LIQUID GLASS REMODEL]
    ============================================================ */
 [data-theme="light"] {
-  /* ── WARM PAPER+ — Light Mode ── */
-  --green:     #16A34A;
-  --red:       #DC2626;
-  --orange:    #EA580C;
-  --purple:    #7C3AED;
-  --bg:        #F5F0E8;
-  --bg2:       #FAF6EF;
-  --glass:     rgba(255,255,255,0.75);
-  --glass2:    rgba(255,255,255,0.88);
-  --glassh:    rgba(255,255,255,0.97);
-  --glow:      rgba(13,148,136,0.08);
-  --text:      #1C1612;
-  --text2:     #6B5A48;
-  --muted:     #A8967E;
-  --border:    #E8E0D5;
-  --border2:   #D4C8B8;
-  --bordera:   rgba(13,148,136,0.4);
-  --accent:    #0D9488;
-  --accent2:   #0F766E;
-  --shadow:    0 4px 16px rgba(160,120,80,0.1);
-  --shadow-sm: 0 2px 8px rgba(160,120,80,0.07);
-  --glow-card: 0 0 0 1px rgba(13,148,136,0.15), 0 4px 16px rgba(13,148,136,0.08);
+  /* ── LIQUID GLASS — Light Mode ── */
+  /* Soft sky/cloud background — surfaces appear frosted over it */
+  --bg:        #dce8f5;
+  --bg2:       #e8f0fa;
+
+  /* Glass surfaces: white-tinted, very transparent */
+  --glass:     rgba(255,255,255,0.35);
+  --glass2:    rgba(255,255,255,0.55);
+  --glassh:    rgba(255,255,255,0.72);
+
+  --glow:      rgba(80,150,255,0.10);
+
+  --text:      rgba(10,20,40,0.92);
+  --text2:     rgba(30,60,100,0.60);
+  --muted:     rgba(80,120,160,0.50);
+
+  --border:    rgba(255,255,255,0.50);
+  --border2:   rgba(100,160,255,0.30);
+  --bordera:   rgba(100,160,255,0.55);
+
+  --accent:    #1a6aff;
+  --accent2:   #0050cc;
+
+  --green:     #00b87a;
+  --red:       #e83055;
+  --orange:    #f07030;
+  --purple:    #8040e0;
+  --cyan:      #00b8d4;
+  --pink:      #e040a0;
+
+  --shadow:    0 4px 24px rgba(60,100,160,0.15), 0 1px 4px rgba(60,100,160,0.08);
+  --shadow-sm: 0 2px 12px rgba(60,100,160,0.10);
+
+  --glow-card: 0 0 0 1px rgba(100,160,255,0.22),
+               0 8px 32px rgba(26,106,255,0.12);
+
+  --glass-specular: inset 0 1px 0 rgba(255,255,255,0.7),
+                    inset 0 -1px 0 rgba(100,140,200,0.08),
+                    inset 1px 0 0 rgba(255,255,255,0.3),
+                    inset -1px 0 0 rgba(255,255,255,0.3);
+
+  --chromatic-border: linear-gradient(135deg,
+    rgba(100,170,255,0.5) 0%,
+    rgba(160,100,255,0.3) 35%,
+    rgba(60,210,200,0.3) 65%,
+    rgba(100,170,255,0.5) 100%);
 }
 
 /* ============================================================
@@ -91,14 +151,22 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 [data-theme="dark"] body {
-  /* Diagonal atmosphere — Charcoal Teal */
-  background-image: linear-gradient(135deg,#505153 0%,#1E2023 45%,#0e0e10 100%);
-  background-attachment: scroll;
+  /* Deep space — liquid glass looks best against rich deep gradients */
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(26,106,255,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 10%, rgba(120,50,255,0.12) 0%, transparent 45%),
+    radial-gradient(ellipse at 60% 85%, rgba(0,180,200,0.10) 0%, transparent 50%),
+    linear-gradient(160deg, #06090f 0%, #080d18 50%, #050810 100%);
+  background-attachment: fixed;
 }
 [data-theme="light"] body {
-  /* Diagonal atmosphere — Warm Paper+ */
-  background-image: linear-gradient(135deg,#f6f4f1 0%,#F5F0E8 45%,#c4c2bf 100%);
-  background-attachment: scroll;
+  /* Soft sky — frosted glass reads beautifully against this */
+  background-image:
+    radial-gradient(ellipse at 15% 15%, rgba(100,160,255,0.30) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 10%, rgba(160,100,255,0.18) 0%, transparent 45%),
+    radial-gradient(ellipse at 55% 90%, rgba(60,210,240,0.15) 0%, transparent 50%),
+    linear-gradient(160deg, #c8dcf0 0%, #dce8f5 50%, #ccd8ee 100%);
+  background-attachment: fixed;
 }
 /* Hover-reveal scrollbar — hidden by default, appears on container hover */
 ::-webkit-scrollbar { width: 4px; height: 4px; }
@@ -118,62 +186,91 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 .task-title,.modal-title,.detail-title { font-family: var(--font-disp); }
 
 /* ============================================================
-   GLASSMORPHISM BASE
+   LIQUID GLASS BASE
    ============================================================ */
+
+/* Pseudo-element chromatic top border for cards */
 .glass-card {
-  /* Hybrid surface: near-solid, picks up a hint of background atmosphere */
-  background: rgba(44,48,51,0.92);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  position: relative;
+  /* Ultra-transparent — background scene bleeds through */
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-  /* Neumorphic depth — dark mode */
-  box-shadow: 8px 8px 20px rgba(6,8,10,0.7), -4px -4px 10px rgba(58,66,72,0.32);
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, background 0.25s;
+  /* Specular inset highlights — the liquid glass "refraction" */
+  box-shadow:
+    var(--glass-specular),
+    var(--shadow);
+  /* Subtle noise texture layer for refractive feel */
+  overflow: hidden;
 }
+
+/* Chromatic shimmer line along top edge */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--chromatic-border);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: opacity 0.25s;
+}
+
 .glass-card:hover {
+  background: var(--glass2);
   border-color: var(--border2);
   box-shadow:
-    var(--glow-card),
-    10px 10px 28px rgba(6,8,10,0.75),
-    -4px -4px 12px rgba(62,70,76,0.35);
-  transform: translateY(-4px);
+    var(--glass-specular),
+    var(--glow-card);
+  transform: translateY(-3px);
+}
+.glass-card:hover::before {
+  opacity: 1;
 }
 .glass-card:active {
-  transform: translateY(1px);
-  box-shadow:
-    inset 5px 5px 12px rgba(0,0,0,0.35),
-    inset -3px -3px 8px rgba(255,255,255,0.06);
+  transform: translateY(0px);
+  background: var(--glassh);
+  box-shadow: var(--glass-specular), var(--shadow-sm);
   transition: transform 0.08s ease, box-shadow 0.08s ease;
 }
-/* Light mode hybrid — near-solid warm white */
-[data-theme="light"] .modal-content { background: #FDFCFA; backdrop-filter: none; -webkit-backdrop-filter: none; }
-[data-theme="light"] .modal { background: #FDFCFA; backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 0 0 1px rgba(13,148,136,0.1); }
+
+/* Light mode liquid glass */
 [data-theme="light"] .glass-card {
-  background: #FFFFFF;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  /* Strong neumorphic — white cards visibly float above the cream body */
-  box-shadow:
-    10px 10px 28px rgba(130,100,60,0.22),
-    -5px -5px 14px rgba(255,255,255,1),
-    0 2px 4px rgba(130,100,60,0.08);
-  border-color: rgba(215,200,180,0.5);
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  box-shadow: var(--glass-specular), var(--shadow);
+  border-color: var(--border);
 }
 [data-theme="light"] .glass-card:hover {
-  box-shadow:
-    var(--glow-card),
-    14px 14px 32px rgba(130,100,60,0.25),
-    -6px -6px 16px rgba(255,255,255,1),
-    0 4px 8px rgba(130,100,60,0.1);
+  background: var(--glass2);
+  box-shadow: var(--glass-specular), var(--glow-card);
   transform: translateY(-3px);
 }
 [data-theme="light"] .glass-card:active {
-  transform: translateY(1px);
-  box-shadow:
-    inset 5px 5px 12px rgba(130,100,60,0.18),
-    inset -3px -3px 8px rgba(255,255,255,0.9);
+  transform: translateY(0px);
+  box-shadow: var(--glass-specular), var(--shadow-sm);
   transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+/* Modal liquid glass */
+[data-theme="light"] .modal-content {
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+}
+[data-theme="light"] .modal {
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  box-shadow: var(--glass-specular), 0 24px 64px rgba(60,100,160,0.20);
 }
 
 
@@ -196,25 +293,29 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
   top: 0; left: 0;
   width: var(--sidebar-w);
   height: 100vh;
-  /* Split dark glass — dark mode: near-black with teal tint */
-  background: rgba(8,10,12,0.72);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-right: 1px solid rgba(255,255,255,0.07);
-  box-shadow: 2px 0 24px rgba(0,0,0,0.6), inset -1px 0 0 rgba(255,255,255,0.05);
+  /* Liquid glass sidebar — transparent panel, world bleeds through */
+  background: rgba(10,14,20,0.45);
+  backdrop-filter: blur(48px) saturate(2);
+  -webkit-backdrop-filter: blur(48px) saturate(2);
+  border-right: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    inset -1px 0 0 rgba(255,255,255,0.05),
+    4px 0 32px rgba(0,0,0,0.4);
   display: flex; flex-direction: column;
   padding: 20px 12px;
   z-index: 1000;
   transition: width 0.3s ease, transform 0.3s ease;
   overflow: hidden;
 }
-/* Light mode: warm cream glass sidebar */
+/* Light mode: frosted sidebar */
 [data-theme="light"] .sidebar {
-  background: rgba(196,192,185,0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-right: 1px solid rgba(160,140,110,0.25);
-  box-shadow: 2px 0 16px rgba(140,120,90,0.12), inset -1px 0 0 rgba(255,255,255,0.5);
+  background: rgba(210,225,245,0.45);
+  backdrop-filter: blur(40px) saturate(1.8);
+  -webkit-backdrop-filter: blur(40px) saturate(1.8);
+  border-right: 1px solid rgba(255,255,255,0.5);
+  box-shadow:
+    inset -1px 0 0 rgba(255,255,255,0.6),
+    4px 0 24px rgba(60,100,160,0.12);
 }
 
 /* Collapsed state */
@@ -908,21 +1009,40 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 }
 .fab-wrap.hidden { display: none; }
 .fab-main {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: rgba(40,92,112,0.55); backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
-  border: 1px solid rgba(79,154,181,0.4);
-  box-shadow: 0 4px 16px rgba(40,92,112,0.4);
-  color: #E8EDEF; font-size: 26px; cursor: pointer;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(26,106,255,0.25);
+  backdrop-filter: blur(32px) saturate(2);
+  -webkit-backdrop-filter: blur(32px) saturate(2);
+  border: 1px solid rgba(120,180,255,0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    inset 0 -1px 0 rgba(0,0,0,0.2),
+    0 8px 32px rgba(26,106,255,0.35),
+    0 2px 8px rgba(0,0,0,0.3);
+  color: rgba(200,230,255,0.95); font-size: 26px; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.2s; font-family: var(--font);
   line-height: 1;
-  pointer-events: auto; /* restored: parent .fab-wrap has pointer-events:none */
+  pointer-events: auto;
 }
-.fab-main:hover { background: rgba(40,92,112,1); transform: scale(1.08); }
-.fab-main.open { transform: rotate(45deg); background: rgba(40,92,112,1); }
-[data-theme="light"] .fab-main { background: rgba(13,148,136,0.9); border-color: rgba(13,148,136,0.5); box-shadow: 0 4px 16px rgba(13,148,136,0.35); color: #fff; }
-[data-theme="light"] .fab-main:hover { background: rgba(13,148,136,1); }
+.fab-main:hover {
+  background: rgba(26,106,255,0.5);
+  border-color: rgba(120,200,255,0.55);
+  transform: scale(1.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    0 12px 40px rgba(26,106,255,0.5);
+}
+.fab-main.open { transform: rotate(45deg); background: rgba(26,106,255,0.6); }
+[data-theme="light"] .fab-main {
+  background: rgba(26,106,255,0.2);
+  border-color: rgba(100,160,255,0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.6),
+    0 8px 32px rgba(26,106,255,0.25);
+  color: #1a6aff;
+}
+[data-theme="light"] .fab-main:hover { background: rgba(26,106,255,0.35); }
 .fab-options {
   display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
   opacity: 0; pointer-events: none; transform: translateY(12px);
@@ -931,14 +1051,22 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 .fab-options.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
 .fab-option {
   display: flex; align-items: center; gap: 10px; cursor: pointer;
-  background: rgba(15,20,40,0.82); backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
-  border: 1px solid var(--border2); border-radius: 24px;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(32px) saturate(1.8);
+  -webkit-backdrop-filter: blur(32px) saturate(1.8);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 24px;
   padding: 8px 14px 8px 10px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    0 4px 20px rgba(0,0,0,0.35);
   transition: all 0.15s; white-space: nowrap; font-family: var(--font);
 }
-.fab-option:hover { background: rgba(40,92,112,0.2); border-color: var(--accent); transform: translateX(-3px); }
+.fab-option:hover {
+  background: rgba(26,106,255,0.18);
+  border-color: rgba(120,180,255,0.35);
+  transform: translateX(-3px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 20px rgba(26,106,255,0.2);
+}
 .fab-option-icon { font-size: 16px; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--glass2); flex-shrink: 0; }
 .fab-option-label { font-size: 12px; font-weight: 600; color: var(--text); }
 
@@ -2652,7 +2780,310 @@ h1,h2,h3,h4,.section-title,.page-title,.h2-title,.sidebar-brand,
 }
 
 .archive-card-btn { width: 100%; margin-top: 10px; padding: 6px; background: rgba(248,113,113,0.08); color: #F87171; border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: var(--font); text-align: center; }
-.archive-card-btn:hover { background: rgba(248,113,113,0.18); }</style>
+.archive-card-btn:hover { background: rgba(248,113,113,0.18); }
+
+/* ============================================================
+   LIQUID GLASS OVERRIDES — surfaces, modals, inputs, kanban
+   Applied after all existing rules; surgical and additive.
+   ============================================================ */
+
+/* ── Core surface sweep ── */
+/* Every surface that previously used near-opaque dark gets liquid treatment */
+.modal-content,
+.modal {
+  background: rgba(12,18,30,0.55) !important;
+  backdrop-filter: blur(48px) saturate(2) !important;
+  -webkit-backdrop-filter: blur(48px) saturate(2) !important;
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    0 24px 64px rgba(0,0,0,0.6) !important;
+}
+[data-theme="light"] .modal-content,
+[data-theme="light"] .modal {
+  background: rgba(220,235,250,0.55) !important;
+  backdrop-filter: blur(40px) saturate(1.8) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(1.8) !important;
+  border-color: rgba(255,255,255,0.55) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    0 24px 64px rgba(60,100,160,0.18) !important;
+}
+
+/* ── Kanban columns ── */
+.kanban-col {
+  background: rgba(255,255,255,0.04) !important;
+  backdrop-filter: blur(24px) saturate(1.6) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.6) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08) !important;
+}
+[data-theme="light"] .kanban-col {
+  background: rgba(255,255,255,0.28) !important;
+  border-color: rgba(255,255,255,0.5) !important;
+  backdrop-filter: blur(24px) saturate(1.6) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.6) !important;
+}
+
+/* ── Task cards (kanban) ── */
+.task-card {
+  background: rgba(255,255,255,0.06) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    0 2px 12px rgba(0,0,0,0.3) !important;
+  border-radius: 14px !important;
+  transition: all 0.2s !important;
+}
+.task-card:hover {
+  background: rgba(255,255,255,0.10) !important;
+  border-color: rgba(120,200,255,0.25) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    0 4px 24px rgba(26,106,255,0.2),
+    0 8px 32px rgba(0,0,0,0.3) !important;
+  transform: translateY(-2px) !important;
+}
+[data-theme="light"] .task-card {
+  background: rgba(255,255,255,0.40) !important;
+  border-color: rgba(255,255,255,0.55) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.8),
+    0 2px 12px rgba(60,100,160,0.10) !important;
+}
+[data-theme="light"] .task-card:hover {
+  background: rgba(255,255,255,0.60) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 4px 24px rgba(26,106,255,0.15) !important;
+}
+
+/* ── Kanban column header ── */
+.kanban-col-hdr {
+  background: rgba(255,255,255,0.04) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+}
+[data-theme="light"] .kanban-col-hdr {
+  background: rgba(255,255,255,0.25) !important;
+  border-bottom-color: rgba(255,255,255,0.45) !important;
+}
+
+/* ── Filter bar ── */
+.kanban-filter-bar {
+  background: rgba(255,255,255,0.05) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-color: rgba(255,255,255,0.09) !important;
+}
+[data-theme="light"] .kanban-filter-bar {
+  background: rgba(255,255,255,0.30) !important;
+  border-color: rgba(255,255,255,0.50) !important;
+}
+
+/* ── Form inputs — liquid glass ── */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+select,
+textarea {
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: var(--text) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-radius: 10px !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
+select:focus,
+textarea:focus {
+  border-color: rgba(120,180,255,0.45) !important;
+  box-shadow:
+    0 0 0 3px rgba(26,106,255,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.1) !important;
+  outline: none !important;
+  background: rgba(255,255,255,0.09) !important;
+}
+[data-theme="light"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  background: rgba(255,255,255,0.45) !important;
+  border-color: rgba(255,255,255,0.6) !important;
+}
+[data-theme="light"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
+[data-theme="light"] select:focus,
+[data-theme="light"] textarea:focus {
+  background: rgba(255,255,255,0.65) !important;
+  border-color: rgba(100,160,255,0.55) !important;
+  box-shadow: 0 0 0 3px rgba(26,106,255,0.12) !important;
+}
+
+/* ── Pill strips / filter pills ── */
+.kb-pill, .gt-fpill, .kb-search-wrap, .kb-dropdown-btn {
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(255,255,255,0.10) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+.kb-pill:hover, .gt-fpill:hover {
+  background: rgba(255,255,255,0.11) !important;
+  border-color: rgba(120,200,255,0.22) !important;
+}
+.kb-pill.active {
+  background: rgba(26,106,255,0.18) !important;
+  border-color: rgba(93,184,255,0.4) !important;
+  box-shadow: 0 0 12px rgba(26,106,255,0.2), inset 0 1px 0 rgba(255,255,255,0.15) !important;
+}
+[data-theme="light"] .kb-pill,
+[data-theme="light"] .gt-fpill,
+[data-theme="light"] .kb-search-wrap,
+[data-theme="light"] .kb-dropdown-btn {
+  background: rgba(255,255,255,0.35) !important;
+  border-color: rgba(255,255,255,0.55) !important;
+}
+
+/* ── Sidebar nav buttons ── */
+.sidebar-btn:hover {
+  background: rgba(255,255,255,0.09) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+}
+.sidebar-btn.active {
+  background: rgba(26,106,255,0.18) !important;
+  border-color: rgba(93,184,255,0.3) !important;
+  color: var(--accent2) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12) !important;
+}
+[data-theme="light"] .sidebar-btn:hover {
+  background: rgba(255,255,255,0.45) !important;
+}
+[data-theme="light"] .sidebar-btn.active {
+  background: rgba(26,106,255,0.12) !important;
+  border-color: rgba(100,160,255,0.35) !important;
+}
+
+/* ── Sync block ── */
+.sync-block {
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(255,255,255,0.07) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+[data-theme="light"] .sync-block {
+  background: rgba(255,255,255,0.30) !important;
+  border-color: rgba(255,255,255,0.5) !important;
+}
+
+/* ── Floating dropdowns / subtask panel ── */
+.kb-float, .subtask-panel {
+  background: rgba(12,18,30,0.65) !important;
+  backdrop-filter: blur(40px) saturate(2) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(2) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    0 16px 48px rgba(0,0,0,0.5) !important;
+}
+[data-theme="light"] .kb-float,
+[data-theme="light"] .subtask-panel {
+  background: rgba(220,235,250,0.65) !important;
+  border-color: rgba(255,255,255,0.6) !important;
+}
+
+/* ── Today items ── */
+.today-item {
+  background: rgba(255,255,255,0.05) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+.today-item:hover {
+  background: rgba(255,255,255,0.09) !important;
+  border-color: rgba(120,200,255,0.22) !important;
+}
+
+/* ── Cal wrap ── */
+.cal-wrap {
+  background: rgba(255,255,255,0.04) !important;
+  backdrop-filter: blur(32px) saturate(1.6) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(1.6) !important;
+  border-color: rgba(255,255,255,0.09) !important;
+}
+[data-theme="light"] .cal-wrap {
+  background: rgba(255,255,255,0.30) !important;
+  border-color: rgba(255,255,255,0.55) !important;
+}
+
+/* ── Person cards ── */
+.person-card {
+  background: rgba(255,255,255,0.05) !important;
+  backdrop-filter: blur(24px) saturate(1.6) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.6) !important;
+  border-color: rgba(255,255,255,0.09) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 4px 20px rgba(0,0,0,0.25) !important;
+}
+.person-card:hover {
+  background: rgba(255,255,255,0.09) !important;
+  border-color: rgba(120,200,255,0.22) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), var(--glow-card) !important;
+}
+[data-theme="light"] .person-card {
+  background: rgba(255,255,255,0.35) !important;
+  border-color: rgba(255,255,255,0.55) !important;
+}
+
+/* ── GT panel cards ── */
+.gt-panel-card, .gt-card {
+  background: rgba(255,255,255,0.05) !important;
+  border-color: rgba(255,255,255,0.09) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
+.gt-panel-card:hover, .gt-card:hover {
+  background: rgba(255,255,255,0.09) !important;
+  border-color: rgba(120,200,255,0.20) !important;
+}
+[data-theme="light"] .gt-panel-card,
+[data-theme="light"] .gt-card {
+  background: rgba(255,255,255,0.35) !important;
+  border-color: rgba(255,255,255,0.55) !important;
+}
+
+/* ── Mini calendar today ── */
+.gt-mc-cell.today-mc {
+  background: rgba(26,106,255,0.25) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 8px rgba(26,106,255,0.3) !important;
+}
+
+/* ── Active sidebar btn state text ── */
+[data-theme="light"] .sidebar-btn { color: rgba(20,40,80,0.75) !important; }
+[data-theme="light"] .sidebar-btn:hover { color: rgba(10,20,40,0.92) !important; }
+
+/* ── Sidebar bottom collapse btn ── */
+.sidebar-collapse-row-btn {
+  background: rgba(255,255,255,0.05) !important;
+  border-color: rgba(255,255,255,0.09) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+.sidebar-collapse-row-btn:hover {
+  background: rgba(255,255,255,0.10) !important;
+  border-color: rgba(120,200,255,0.22) !important;
+}
+
+/* ── Sticky notes ── */
+.sticky-note {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255,255,255,0.18) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    4px 6px 24px rgba(0,0,0,0.35) !important;
+}
+
+/* ── Scrollbar accent update ── */
+*:hover::-webkit-scrollbar-thumb { background: rgba(93,184,255,0.3) !important; }
+[data-theme="light"] *:hover::-webkit-scrollbar-thumb { background: rgba(26,106,255,0.25) !important; }
+</style>
 </head>
 <body>
 
@@ -9445,3 +9876,4 @@ function output(obj) {
 -->
 </body>
 </html>
+
